@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gerenciamento de Equipe Atualizado - Barbearia</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "accent-gold": "#D4AF37", 
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                        "card-dark": "#192033",
+                        "text-secondary": "#92a0c9",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased selection:bg-primary selection:text-white">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200 dark:border-[#232c48] px-4 py-4">
+<div class="flex items-center justify-between mb-4">
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-slate-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<div class="flex gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-slate-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-slate-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors relative">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+<span class="absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-accent-gold border-2 border-background-dark"></span>
+</button>
+</div>
+</div>
+<div>
+<h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Sua Equipe</h1>
+<p class="text-slate-500 dark:text-text-secondary text-sm mt-1">Gerencie os profissionais e status.</p>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto px-4 py-6 pb-24 hide-scrollbar">
+<div class="grid grid-cols-2 gap-3 mb-6">
+<div class="bg-white dark:bg-card-dark rounded-xl p-4 border border-gray-100 dark:border-[#232c48] shadow-sm">
+<div class="flex items-start justify-between">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-text-secondary uppercase tracking-wider">Total</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">12</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">groups</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl p-4 border border-gray-100 dark:border-[#232c48] shadow-sm">
+<div class="flex items-start justify-between">
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-text-secondary uppercase tracking-wider">Ativos</p>
+<p class="text-2xl font-bold text-accent-gold mt-1">09</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Profissionais</h2>
+<button class="text-sm font-medium text-accent-gold hover:text-accent-gold/80 transition-colors">Ver todos</button>
+</div>
+<div class="flex flex-col gap-4">
+<article class="group relative flex items-center justify-between rounded-xl bg-white dark:bg-card-dark p-4 shadow-sm border border-transparent hover:border-accent-gold/30 transition-all duration-300">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center border-2 border-transparent group-hover:border-accent-gold transition-colors shadow-md" data-alt="Portrait of a smiling barber with a beard" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyEvt3u3HQ3LCv3S4BSuqkuwgbDMqj4YrEBEVMvarlnDU7i7vC1CvJTGxffcz4L-QQuPQGlOAFiI8dV6S-YkpvuCVBZbqa-loPt11_RMVZy0GnbF9bg7HymFG0OWGG5Tawx7Xb5V6q9JZ-uw6wXPINRU3tYCQmNAV-KEKGFZkL3waA-zuYSiGZOgyJ1dIZ8H87BSs6MLi26SqyYWI8skihE3E9TxgPpjGw4am_rPUtRjBrOS-6vNj0zOY6ZT82Z5lboVzltkhQAXA');"></div>
+<div class="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-emerald-500 border-[3px] border-white dark:border-card-dark"></div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Carlos Silva</h3>
+<p class="text-xs font-medium text-accent-gold uppercase tracking-wide mt-0.5 opacity-80">Master Barber</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-slate-200 dark:bg-[#2c3b5e] after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent-gold peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600"></div>
+</label>
+<button class="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</article>
+<article class="group relative flex items-center justify-between rounded-xl bg-white dark:bg-card-dark p-4 shadow-sm border border-transparent hover:border-accent-gold/30 transition-all duration-300">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center border-2 border-transparent group-hover:border-accent-gold transition-colors shadow-md" data-alt="Portrait of a male barber with stylish haircut" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAx7_ERDMZVVJcVuQMWm8oJ3Fj9F-94pr7uMXXB5E5a6TFaPLrHEDZ7hwJ-cqj43TX9x_J3XhmPyMmzTCvqjJURGQKYHJlwMXxAMBemVDSqpLkRJOL45MRrvbE7erIUPFuEGB4wOWC0g4WK8alHEzmAhY8xRlx1Zyf_GskOmzx5dp7YJEF_YPXkLtqpwQEfSx5UP_aJolcU4l8QrwWQ9kbiJ29j9_Z1EOdA6ZIeED89MMVB_iQZrMq2_yzwovmwHGGedgI74wL1kXg');"></div>
+<div class="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-emerald-500 border-[3px] border-white dark:border-card-dark"></div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">André Souza</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-text-secondary uppercase tracking-wide mt-0.5">Barbeiro Senior</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-slate-200 dark:bg-[#2c3b5e] after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent-gold peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600"></div>
+</label>
+<button class="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</article>
+<article class="group relative flex items-center justify-between rounded-xl bg-white dark:bg-card-dark p-4 shadow-sm border border-transparent hover:border-accent-gold/30 transition-all duration-300 opacity-75 grayscale-[0.5] hover:opacity-100 hover:grayscale-0">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center border-2 border-transparent group-hover:border-accent-gold transition-colors shadow-md" data-alt="Portrait of a young barber looking at camera" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_9tT7AOlC3tm9XlCS4EVX2ZIROENN2mGKkwGpuXnU52uymXjF-tFZoL2C85JdV_Uv-76sRD4HGcwBOjbbIpQoZDX951sgGV8PgrbRqL6YgwjT_7mEqPoW3OYwJiUZHhS256fIFxfaohwlNvigB5uVWNiLE5TWRe5WxHFD3hf7Uib014Yy68249KmY8sRwIDAd0EU_esWHcU6qeuBLU1QwK1mCmOYrcMuWWFxB1PxcQ_lkaV5uBlxyvO_xqHjKRcYW_PjX_Uz1HHg');"></div>
+<div class="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-slate-400 border-[3px] border-white dark:border-card-dark"></div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Ricardo Lima</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-text-secondary uppercase tracking-wide mt-0.5">Barbeiro Pleno</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex cursor-pointer items-center">
+<input class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-slate-200 dark:bg-[#2c3b5e] after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent-gold peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600"></div>
+</label>
+<button class="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</article>
+<article class="group relative flex items-center justify-between rounded-xl bg-white dark:bg-card-dark p-4 shadow-sm border border-transparent hover:border-accent-gold/30 transition-all duration-300">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="h-16 w-16 rounded-full bg-cover bg-center border-2 border-transparent group-hover:border-accent-gold transition-colors shadow-md" data-alt="Portrait of a barber with intense gaze" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDhEN1GxsFtnZsFxP1OvHuX80pcl_DUphJiBL7YWl0Ad_S3n8mLEHIZN7qwm3rl82jfcvaZBTzo7HCzK4Rlc1gcO4QHmS-fQwIlZxxt7KnwRdOGvprbl_OIKb8vRn-qZNGFt95l4g8hjxhCMtytDiz-HOXiXZLEQhnkGZBTSeIXdiG0Wz2jrp6-l3OCU22bXEasqbvR9fwXauMtzg5a9Bq_veaaX7Xv3eJOuztlSf47rqSs2J2U6p-_1D1oMibMnsLma8kPKKeWoBg');"></div>
+<div class="absolute bottom-0 right-0 h-4 w-4 rounded-full bg-emerald-500 border-[3px] border-white dark:border-card-dark"></div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Mateus Oliveira</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-text-secondary uppercase tracking-wide mt-0.5">Barbeiro Junior</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-slate-200 dark:bg-[#2c3b5e] after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-accent-gold peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600"></div>
+</label>
+<button class="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</article>
+</div>
+<div class="mt-6 rounded-xl bg-gradient-to-r from-accent-gold/10 to-accent-gold/5 p-4 border border-accent-gold/20">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-accent-gold mt-0.5">info</span>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Dica de Gestão</h4>
+<p class="text-xs text-slate-500 dark:text-text-secondary mt-1 leading-relaxed">Mantenha os status atualizados para evitar agendamentos em horários indisponíveis.</p>
+</div>
+</div>
+</div>
+</main>
+<button class="absolute bottom-24 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-accent-gold text-slate-900 shadow-lg shadow-accent-gold/40 hover:scale-105 transition-transform active:scale-95 border-2 border-[#ffffff10]">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+</button>
+<nav class="border-t border-gray-200 dark:border-[#232c48] bg-white dark:bg-card-dark px-4 pb-6 pt-2 z-20">
+<div class="flex justify-between items-center">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#92a0c9] hover:text-accent-gold dark:hover:text-accent-gold transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Início</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#92a0c9] hover:text-accent-gold dark:hover:text-accent-gold transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Agenda</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-accent-gold dark:text-accent-gold" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-2xl fill-current">group</span>
+<span class="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-slate-900 dark:bg-white"></span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Equipe</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400 dark:text-[#92a0c9] hover:text-accent-gold dark:hover:text-accent-gold transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Perfil</p>
+</a>
+</div>
+</nav>
+</div>
+
+</body></html>

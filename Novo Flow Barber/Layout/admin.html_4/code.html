@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Equipe | FLOW BARBER</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --primary-gold: #D4AF37;
+            --dark-luxury: #0A0A0B;
+            --card-dark: #141416;
+            --border-gold: rgba(212, 175, 55, 0.2);
+            --ios-bg: #000000;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ios-bg);
+            color: #FFFFFF;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        .luxury-card {
+            background: linear-gradient(145deg, #1A1A1C 0%, #0D0D0E 100%);
+            border: 1px solid var(--border-gold);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .switch-ios {
+            @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none;
+        }
+        .switch-ios-thumb {
+            @apply inline-block h-5 w-5 transform rounded-full bg-white transition duration-200 ease-in-out;
+        }
+        .status-active {
+            @apply bg-green-500;
+        }
+        .status-inactive {
+            @apply bg-zinc-700;
+        }
+        .ios-header {
+            background: rgba(10, 10, 11, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pb-24 overflow-x-hidden">
+<header class="ios-header fixed top-0 w-full z-50 border-b border-zinc-800 px-6 py-4 flex items-center justify-between">
+<button class="text-[var(--primary-gold)]">
+<span class="material-symbols-outlined text-2xl">chevron_left</span>
+</button>
+<h1 class="cinzel text-lg font-bold tracking-widest text-[var(--primary-gold)] uppercase">Gestão de Equipe</h1>
+<button class="text-white">
+<span class="material-symbols-outlined text-2xl">more_horiz</span>
+</button>
+</header>
+<main class="mt-20 px-6">
+<div class="mb-8 mt-4">
+<p class="text-zinc-500 text-xs uppercase tracking-widest font-semibold mb-1">Status Geral</p>
+<h2 class="text-2xl font-bold tracking-tight">Equipe Profissional</h2>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div class="luxury-card rounded-2xl overflow-hidden p-4 flex items-center gap-4">
+<div class="relative w-20 h-20 flex-shrink-0">
+<img alt="Barbeiro" class="w-full h-full object-cover rounded-xl border border-[var(--border-gold)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWJC1cGofEAq8Bkcg8j2mogBvajxfxwsPniMJzQBZjJzj5hzfFjkhKmxqIQvMlA2YJFPnRUB7VksWbImB5g3-APwbQ9OpiEoOm0SjYx64X1qkIp2WEh-WvWS8OigPlWEe58UvkfOJVPLyDNN9s8qRZRy3IoDjRbApZOEdEFfuCZe-Girb4iykvubWmNiT0BZxpw56y4wS54_v29k0btJ82Zdm3GpWTHSPwsPCHcu5EaB82RLuiVCUHSYJbcpN-GBBPSCPRiqkmHtY"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[var(--card-dark)] rounded-full"></div>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold tracking-wide text-zinc-100 uppercase">Ricardo Santos</h3>
+<p class="text-zinc-500 text-xs font-medium tracking-tight mt-0.5">Disponibilidade</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="switch-ios status-active">
+<span class="switch-ios-thumb translate-x-5"></span>
+</button>
+</div>
+</div>
+<div class="luxury-card rounded-2xl overflow-hidden p-4 flex items-center gap-4 opacity-90">
+<div class="relative w-20 h-20 flex-shrink-0">
+<img alt="Barbeiro" class="w-full h-full object-cover rounded-xl border border-[var(--border-gold)] grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIq0tmljwtFtZMhSb817sIeR-u7cU3BuGuZ5HW0fzbd7NQdBv9c4nm0OP7l2LbXbJvYGVdEDd9V3PPBkZrmjpfAK8TB42_6TNj73MhSVvJwnE5kxLTInu4NNPw3nXWDH8L7jQ25R6F2uzYbkCUWCec6EqixcJp535E3FR1HHQwsOKeaUu0rV4BnK0mBSkE4KPHO8dYU-N7AYS7uzSn6xisrSdMrGL8O7-DT2LXkAGuXNLpx4yYjjjjw3QfcqFrEvZIjyRv-rhPaS4"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-zinc-600 border-2 border-[var(--card-dark)] rounded-full"></div>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold tracking-wide text-zinc-100 uppercase">Marco Aurélio</h3>
+<p class="text-zinc-500 text-xs font-medium tracking-tight mt-0.5">Disponibilidade</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="switch-ios status-inactive">
+<span class="switch-ios-thumb translate-x-0.5"></span>
+</button>
+</div>
+</div>
+<div class="luxury-card rounded-2xl overflow-hidden p-4 flex items-center gap-4">
+<div class="relative w-20 h-20 flex-shrink-0">
+<img alt="Barbeiro" class="w-full h-full object-cover rounded-xl border border-[var(--border-gold)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAik3nawHU-lusxyIiQCGyiLwloxlOmyh9ad5IA22iz6KVu9b6RgVmmdV0wraUEbvzAUpuQFCC04TbBtdCsOfda8mkkYhnufTDr33uHjtsi6sPhdkhRFa1x7zVzcxEj2uWOqoQvKzt8SRq2sepCDvrGRgnYzb82T20u8czL2j0yh6VCvGw4462idsP3J_Ue4XpgBQWtG_BRpAlG2I31uyQQdCWvw00KuLECA8yF14xplLJkXQubsapHEQPrinPXVXv343ei3MtP78Y"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[var(--card-dark)] rounded-full"></div>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold tracking-wide text-zinc-100 uppercase">Felipe Oliveira</h3>
+<p class="text-zinc-500 text-xs font-medium tracking-tight mt-0.5">Disponibilidade</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="switch-ios status-active">
+<span class="switch-ios-thumb translate-x-5"></span>
+</button>
+</div>
+</div>
+<div class="luxury-card rounded-2xl overflow-hidden p-4 flex items-center gap-4">
+<div class="relative w-20 h-20 flex-shrink-0">
+<img alt="Barbeiro" class="w-full h-full object-cover rounded-xl border border-[var(--border-gold)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEu_VCIP8PxM9dciTPqLzWe0GlRtLEcxTga5DFt3hKkZidGM9LqeyeDYtQjbhn89QM-hVYghdix3Dh1ySfmem3VbOUByuCgdpx3wTdKrEb4ZC1RjzIHdBYGr3bQL4IniufmWwYxsnx9UDaCpZRvTMAih7qbMxH65X25Mdv5c8xpzfGYrV-Eo2iJTDe0YCUOkW-xbnBHC2idD4Ids1FLASXdGPptuhW-I5BAAPqCxeJ-Gqti_EOA7CbulB-Ngzoj6C8SebL7hqBXjw"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[var(--card-dark)] rounded-full"></div>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold tracking-wide text-zinc-100 uppercase">Gabriel Lima</h3>
+<p class="text-zinc-500 text-xs font-medium tracking-tight mt-0.5">Disponibilidade</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="switch-ios status-active">
+<span class="switch-ios-thumb translate-x-5"></span>
+</button>
+</div>
+</div>
+<div class="luxury-card rounded-2xl overflow-hidden p-4 flex items-center gap-4">
+<div class="relative w-20 h-20 flex-shrink-0">
+<img alt="Barbeiro" class="w-full h-full object-cover rounded-xl border border-[var(--border-gold)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_wtFa6pzkPzJNwiYTGqD3l8n5CQTng7RwYWDRHtuXf9bMafeCxZLpIVB3I4HJiur207nrBPj8LOu9etKXIMbvpMeXCjFmOxuQeuTZcd4o5UFKPJebCvCU7qcnRC0jOKoSMgka20hfssXCCuHKRc8-z6VKWpeB2zYiA2naJbUFCSepRAp2BdB3XJuAcN_Zh1-OF47vopUQS3cVpBQ0ibYckyyN5BB7F0VldslFQDw1k8w0e5Qs8-yUiwjuEO8U5a0YjGvAUXGla8g"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[var(--card-dark)] rounded-full"></div>
+</div>
+<div class="flex-grow">
+<h3 class="text-lg font-bold tracking-wide text-zinc-100 uppercase">Thiago Mendes</h3>
+<p class="text-zinc-500 text-xs font-medium tracking-tight mt-0.5">Disponibilidade</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="switch-ios status-active">
+<span class="switch-ios-thumb translate-x-5"></span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-[var(--primary-gold)] rounded-full gold-glow flex items-center justify-center text-black active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+</button>
+<nav class="fixed bottom-0 w-full ios-header border-t border-zinc-800 px-8 py-3 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-zinc-500">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-zinc-500">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-medium">Agenda</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[var(--primary-gold)]">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Equipe</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-zinc-500">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Finanças</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-zinc-500">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Ajustes</span>
+</button>
+</nav>
+
+</body></html>

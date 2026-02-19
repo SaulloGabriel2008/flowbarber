@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão Financeira - Barbearia</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                        "surface-dark": "#2c2616", // Slightly lighter than bg-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for horizontal scrolling */
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto shadow-2xl overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="flex items-center justify-between px-5 pt-12 pb-4 bg-background-light dark:bg-background-dark sticky top-0 z-20">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold text-center flex-1 text-slate-900 dark:text-white">Gestão Financeira</h1>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">more_vert</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col gap-6 pb-24 overflow-y-auto">
+<!-- Period Toggle -->
+<div class="px-5">
+<div class="flex p-1 bg-gray-200 dark:bg-surface-dark rounded-xl">
+<button class="flex-1 py-2 px-4 rounded-lg bg-white dark:bg-primary shadow-sm text-sm font-semibold text-slate-900 dark:text-background-dark transition-all">
+                        Semanal
+                    </button>
+<button class="flex-1 py-2 px-4 rounded-lg text-sm font-medium text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-all">
+                        Mensal
+                    </button>
+</div>
+</div>
+<!-- Total Revenue Chart Section -->
+<div class="px-5 flex flex-col gap-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-500 dark:text-gray-400">Faturamento Total</span>
+<div class="flex items-baseline gap-2">
+<h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">R$ 12.450,00</h2>
+<span class="flex items-center text-sm font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[16px] mr-0.5">trending_up</span>
+                            +15%
+                        </span>
+</div>
+</div>
+<!-- Chart Visualization -->
+<div class="relative h-48 w-full bg-gradient-to-b from-primary/10 to-transparent rounded-2xl border border-primary/20 p-4 overflow-hidden group">
+<!-- SVG Chart Line -->
+<svg class="absolute bottom-0 left-0 right-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 350 100">
+<!-- Gradient Fill -->
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f4c025" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#f4c025" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 80 Q 35 75, 70 50 T 140 40 T 210 60 T 280 20 T 350 35 V 100 H 0 Z" fill="url(#chartGradient)"></path>
+<path d="M0 80 Q 35 75, 70 50 T 140 40 T 210 60 T 280 20 T 350 35" fill="none" stroke="#f4c025" stroke-linecap="round" stroke-width="3"></path>
+<!-- Dots for interaction hint -->
+<circle class="fill-primary" cx="70" cy="50" r="3"></circle>
+<circle class="fill-primary" cx="140" cy="40" r="3"></circle>
+<circle class="fill-primary" cx="210" cy="60" r="3"></circle>
+<circle class="fill-background-dark stroke-primary stroke-2" cx="280" cy="20" r="5"></circle>
+</svg>
+<!-- Tooltip (Simulated) -->
+<div class="absolute top-4 right-10 bg-surface-dark border border-primary/30 px-3 py-1.5 rounded-lg shadow-lg">
+<p class="text-xs text-gray-400">Sábado, 24</p>
+<p class="text-sm font-bold text-primary">R$ 2.840,00</p>
+</div>
+<!-- X-Axis Labels -->
+<div class="absolute bottom-2 left-0 right-0 flex justify-between px-2 text-[10px] font-medium text-slate-400 dark:text-gray-500 uppercase tracking-wider">
+<span>Seg</span>
+<span>Ter</span>
+<span>Qua</span>
+<span>Qui</span>
+<span>Sex</span>
+<span class="text-primary font-bold">Sáb</span>
+<span>Dom</span>
+</div>
+</div>
+</div>
+<!-- Summary Cards (Horizontal Scroll) -->
+<div class="flex gap-4 overflow-x-auto px-5 pb-2 hide-scroll snap-x">
+<!-- Card 1: Ganhos Totais -->
+<div class="min-w-[160px] bg-white dark:bg-surface-dark p-4 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm snap-start flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<div class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined text-[20px]">attach_money</span>
+</div>
+<span class="text-xs font-bold text-emerald-500">+12%</span>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-gray-400 font-medium mb-1">Ganhos Totais</p>
+<p class="text-lg font-bold text-slate-900 dark:text-white">R$ 12.450</p>
+</div>
+</div>
+<!-- Card 2: Comissões -->
+<div class="min-w-[160px] bg-white dark:bg-surface-dark p-4 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm snap-start flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<div class="p-2 rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[20px] fill-1">content_cut</span>
+</div>
+<span class="text-xs font-bold text-slate-400">Total</span>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-gray-400 font-medium mb-1">Comissões</p>
+<p class="text-lg font-bold text-slate-900 dark:text-white">R$ 4.200</p>
+</div>
+</div>
+<!-- Card 3: Despesas -->
+<div class="min-w-[160px] bg-white dark:bg-surface-dark p-4 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm snap-start flex flex-col justify-between h-32">
+<div class="flex items-start justify-between">
+<div class="p-2 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined text-[20px]">trending_down</span>
+</div>
+<span class="text-xs font-bold text-red-500">-2%</span>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-gray-400 font-medium mb-1">Despesas</p>
+<p class="text-lg font-bold text-slate-900 dark:text-white">R$ 1.100</p>
+</div>
+</div>
+</div>
+<!-- Transactions Section -->
+<div class="px-5 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Transações</h3>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-surface-dark text-slate-600 dark:text-gray-300 border border-transparent dark:border-white/5 hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-surface-dark text-slate-600 dark:text-gray-300 border border-transparent dark:border-white/5 hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Professional Filter -->
+<div class="flex gap-3 overflow-x-auto hide-scroll pb-2">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-background-dark text-xs font-bold whitespace-nowrap">
+                        Todos
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 text-slate-600 dark:text-gray-300 text-xs font-medium whitespace-nowrap hover:border-primary transition-colors">
+<div class="w-4 h-4 rounded-full bg-gray-300 bg-[url('https://i.pravatar.cc/150?u=1')] bg-cover" data-alt="Avatar de barbeiro"></div>
+                        Roberto
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 text-slate-600 dark:text-gray-300 text-xs font-medium whitespace-nowrap hover:border-primary transition-colors">
+<div class="w-4 h-4 rounded-full bg-gray-300 bg-[url('https://i.pravatar.cc/150?u=2')] bg-cover" data-alt="Avatar de barbeiro"></div>
+                        Carlos
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-white/10 text-slate-600 dark:text-gray-300 text-xs font-medium whitespace-nowrap hover:border-primary transition-colors">
+<div class="w-4 h-4 rounded-full bg-gray-300 bg-[url('https://i.pravatar.cc/150?u=3')] bg-cover" data-alt="Avatar de barbeiro"></div>
+                        André
+                    </button>
+</div>
+<!-- List -->
+<div class="flex flex-col gap-3">
+<!-- Transaction Item 1 -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined">content_cut</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Corte + Barba</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] font-medium text-slate-500 dark:text-gray-400">Roberto Silva</span>
+<span class="w-0.5 h-0.5 rounded-full bg-gray-500"></span>
+<span class="text-[10px] text-slate-500 dark:text-gray-500">14:30 • Hoje</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">+ R$ 80,00</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-1.5 rounded mt-0.5">Pago</span>
+</div>
+</div>
+<!-- Transaction Item 2 -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-colors">
+<span class="material-symbols-outlined">spa</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Hidratação</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] font-medium text-slate-500 dark:text-gray-400">Carlos Lima</span>
+<span class="w-0.5 h-0.5 rounded-full bg-gray-500"></span>
+<span class="text-[10px] text-slate-500 dark:text-gray-500">13:15 • Hoje</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">+ R$ 45,00</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-1.5 rounded mt-0.5">Pago</span>
+</div>
+</div>
+<!-- Transaction Item 3 (Expense) -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/10 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Produtos Barbearia</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] font-medium text-slate-500 dark:text-gray-400">Admin</span>
+<span class="w-0.5 h-0.5 rounded-full bg-gray-500"></span>
+<span class="text-[10px] text-slate-500 dark:text-gray-500">09:00 • Ontem</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-sm font-bold text-slate-600 dark:text-gray-300">- R$ 230,00</span>
+<span class="text-[10px] font-medium text-slate-400 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-1.5 rounded mt-0.5">Despesa</span>
+</div>
+</div>
+<!-- Transaction Item 4 (Commission Out) -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-slate-400 dark:text-slate-300 group-hover:bg-slate-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Pagamento Comissão</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[10px] font-medium text-slate-500 dark:text-gray-400">Carlos Lima</span>
+<span class="w-0.5 h-0.5 rounded-full bg-gray-500"></span>
+<span class="text-[10px] text-slate-500 dark:text-gray-500">18:00 • Ontem</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-sm font-bold text-slate-600 dark:text-gray-300">- R$ 450,00</span>
+<span class="text-[10px] font-medium text-primary bg-primary/10 px-1.5 rounded mt-0.5">Processando</span>
+</div>
+</div>
+</div>
+<button class="w-full py-3 mt-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+                    Ver todas as transações
+                </button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full max-w-md bg-white/90 dark:bg-surface-dark/95 backdrop-blur-md border-t border-gray-200 dark:border-white/5 px-6 pb-6 pt-3 z-30 flex justify-between items-center text-xs font-medium">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+<span>Agenda</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+<span>Equipe</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<div class="w-12 h-12 -mt-8 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/30 text-background-dark">
+<span class="material-symbols-outlined text-[28px] fill-1">attach_money</span>
+</div>
+<span>Finanças</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span>Relatórios</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span>Perfil</span>
+</a>
+</nav>
+</div>
+</body></html>

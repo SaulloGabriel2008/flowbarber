@@ -1,0 +1,149 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ========== FUNÇÕES HELPERS ==========
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isMasterAdmin() {
+      return getUserData().email == "saullinho2008@gmail.com";
+    }
+    
+    function isAdmin() {
+      return getUserData().role == "admin" || isMasterAdmin();
+    }
+    
+    function isBarber() {
+      return getUserData().role == "barber";
+    }
+    
+    function isClient() {
+      return getUserData().role == "client";
+    }
+    
+    function isOwnDocument() {
+      return request.auth.uid == resource.data.userId;
+    }
+    
+    // ========== SETTINGS - Apenas Admin Master ==========
+    match /settings/{document=**} {
+      allow read: if isAdmin();
+      allow write: if isMasterAdmin();
+    }
+    
+    // ========== USERS ==========
+    match /users/{userId} {
+      // Cada usuário lê seus próprios dados
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      // Criar coleção própria
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      // Atualizar dados próprios
+      allow update: if isAuthenticated() && request.auth.uid == userId;
+      // Apenas admin deleta
+      allow delete: if isAdmin();
+      
+      // Subcollection de assinaturas
+      match /subscriptions/{subscription} {
+        allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+        allow write: if isAuthenticated() && request.auth.uid == userId;
+      }
+    }
+    
+    // ========== BARBEIROS - Multi-Barbeiros ==========
+    match /barbers/{barberId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAdmin();
+      allow delete: if isMasterAdmin();
+      
+      // Schedule (horários do barbeiro)
+      match /schedule/{schedule} {
+        allow read: if isAuthenticated();
+        allow write: if isAdmin() || (isBarber() && request.auth.uid == barberId);
+      }
+      
+      // Services (serviços do barbeiro)
+      match /services/{service} {
+        allow read: if isAuthenticated();
+        allow write: if isAdmin() || (isBarber() && request.auth.uid == barberId);
+      }
+      
+      // Appointments (agendamentos do barbeiro)
+      match /appointments/{appointment} {
+        allow read: if isAuthenticated() && 
+          (request.auth.uid == barberId || 
+           request.auth.uid == resource.data.clientId || 
+           isAdmin());
+        
+        allow create: if isClient() && request.auth.uid == request.resource.data.clientId;
+        
+        allow update: if isAuthenticated() &&
+          (request.auth.uid == barberId ||
+           request.auth.uid == resource.data.clientId ||
+           isAdmin());
+           
+        allow delete: if isAdmin();
+      }
+    }
+    
+    // ========== CLIENTES ==========
+    match /clients/{clientId} {
+      allow read: if isAuthenticated() && 
+        (request.auth.uid == clientId || isAdmin());
+      allow create: if isClient() && request.auth.uid == clientId;
+      allow update: if isClient() && request.auth.uid == clientId || isAdmin();
+      allow delete: if isAdmin();
+      
+      // Appointments do cliente (espelho)
+      match /appointments/{appointment} {
+        allow read: if isAuthenticated() &&
+          (request.auth.uid == clientId || request.auth.uid == resource.data.barberId || isAdmin());
+        allow write: if request.auth.uid == clientId || isAdmin();
+      }
+    }
+    
+    // ========== SERVIÇOS GLOBAIS ==========
+    match /services/{service} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // ========== AGENDAMENTOS GLOBAIS ==========
+    match /appointments_global/{appointment} {
+      allow read: if isAuthenticated();
+      allow create: if isClient();
+      allow update, delete: if isAdmin();
+    }
+    
+    // ========== FINANÇAS ==========
+    match /financials/{financial} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+    
+    // ========== PLANOS DE ASSINATURA ==========
+    match /plans/{plan} {
+      allow read: if isAuthenticated();
+      allow write: if isMasterAdmin();
+    }
+    
+    // ========== NOTIFICAÇÕES ==========
+    match /notifications/{notification} {
+      allow read: if isAuthenticated() && request.auth.uid == resource.data.userId;
+      allow create: if isAuthenticated();
+      allow delete: if request.auth.uid == resource.data.userId;
+    }
+    
+    // ========== REVIEWS ==========
+    match /reviews/{review} {
+      allow read: if isAuthenticated();
+      allow create: if isClient() && request.auth.uid == resource.data.clientId;
+      allow update, delete: if request.auth.uid == resource.data.clientId || isAdmin();
+    }
+  }
+}

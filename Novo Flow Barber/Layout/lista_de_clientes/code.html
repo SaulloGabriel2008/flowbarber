@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lista de Clientes - Barbearia</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "primary-content": "#ffffff",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                        "surface-dark": "#192033",
+                        "surface-highlight": "#232c48",
+                        "text-secondary": "#92a0c9",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101522; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232c48; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #344065; 
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Status Bar Area (Mockup for iOS) -->
+<div class="h-12 w-full bg-background-dark sticky top-0 z-50 flex items-center justify-between px-6 pt-2">
+<span class="text-white text-sm font-semibold">9:41</span>
+<div class="flex gap-1.5">
+<span class="material-symbols-outlined text-white text-[18px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-white text-[18px]">wifi</span>
+<span class="material-symbols-outlined text-white text-[18px]">battery_full</span>
+</div>
+</div>
+<!-- Main Container -->
+<div class="relative flex flex-1 flex-col overflow-x-hidden">
+<!-- Header Section -->
+<header class="sticky top-12 z-40 bg-background-dark/95 backdrop-blur-sm border-b border-surface-highlight pb-4 pt-2">
+<div class="flex items-center justify-between px-4 pb-4">
+<button class="flex items-center justify-center text-white w-10 h-10 rounded-full hover:bg-surface-highlight transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-white text-xl font-bold tracking-tight">Clientes</h1>
+<button class="flex items-center justify-center text-white w-10 h-10 rounded-full hover:bg-surface-highlight transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="px-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-secondary group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 border-none rounded-2xl bg-surface-highlight text-white placeholder-text-secondary focus:ring-2 focus:ring-primary focus:bg-surface-dark transition-all shadow-sm" placeholder="Buscar por nome ou telefone..." type="text"/>
+</div>
+</div>
+<!-- Quick Filters (Horizontal Scroll) -->
+<div class="flex gap-3 px-4 pt-4 overflow-x-auto no-scrollbar pb-1">
+<button class="flex-shrink-0 px-4 py-1.5 rounded-full bg-primary text-white text-sm font-medium border border-primary">
+                    Todos
+                </button>
+<button class="flex-shrink-0 px-4 py-1.5 rounded-full bg-transparent text-text-secondary text-sm font-medium border border-surface-highlight hover:border-text-secondary hover:text-white transition-colors">
+                    Recentes
+                </button>
+<button class="flex-shrink-0 px-4 py-1.5 rounded-full bg-transparent text-text-secondary text-sm font-medium border border-surface-highlight hover:border-text-secondary hover:text-white transition-colors">
+                    Frequentes
+                </button>
+<button class="flex-shrink-0 px-4 py-1.5 rounded-full bg-transparent text-text-secondary text-sm font-medium border border-surface-highlight hover:border-text-secondary hover:text-white transition-colors">
+                    Inativos
+                </button>
+</div>
+</header>
+<!-- Client List -->
+<main class="flex-1 px-4 py-2 space-y-1 pb-24">
+<!-- Section Title -->
+<div class="flex items-center justify-between py-3">
+<h2 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Total: 142</h2>
+<button class="text-sm text-primary font-medium hover:text-primary/80">Exportar</button>
+</div>
+<!-- List Item 1 -->
+<div class="group relative flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-transparent hover:border-surface-highlight active:scale-[0.99] transition-all cursor-pointer">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center border-2 border-surface-highlight" data-alt="Portrait of a young man with a beard" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9yS-SQDbgjDzDh-9on39iUEnDvHCRnQjzrn27eFhOWO_d6xOR0fv2U7pixbrUtdMMDaxTXzMI4ulmQhOjvN7KJS_96wtcEdR24_K3RcxvHNyFXac71PVIatD3yEvaXFStXQCSGBaWMEgIP9IDHqUe66Pk9ChpGQsff0Hl8WZCAvwndNtdYizoOtTjtRQwi91sa0KCGwel6d8gMF4ptRNfaMYMxrHmKIdjezDHpykB_rAAzsmB2VYh1wQM4W4LoLxSQ53kmqb6_yk");'></div>
+<div class="absolute bottom-0 right-0 h-3.5 w-3.5 bg-green-500 rounded-full border-2 border-surface-dark"></div>
+</div>
+<div class="flex flex-1 flex-col justify-center min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-white text-base font-bold truncate pr-2">Ricardo Silva</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-primary/20 text-primary font-bold">VIP</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mt-0.5">(11) 99999-0000</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-text-secondary text-[14px]">calendar_today</span>
+<p class="text-text-secondary text-xs">Última visita: <span class="text-white">12 Out</span></p>
+</div>
+</div>
+<div class="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-surface-highlight text-text-secondary group-hover:text-white group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="group relative flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-transparent hover:border-surface-highlight active:scale-[0.99] transition-all cursor-pointer">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center border-2 border-surface-highlight" data-alt="Portrait of a smiling man with glasses" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpdwTZswrAS1H6ap0Nkvtj8jTsPfK9kYukrY0UY99WnH4Qx1tJrH-BArbu8cGfNoIxLrUR8MXGf4-m5h0LQxW82E4uB-Ne_kgagiHMeZh90x3oWtDcbCp8o5ewoqbv8e-q_h5ZHyP8ce0tRFRoDweYpLz_oEIz3lPR7RRUliFVQ8Q5GTZ78NlLZJYYdOMgByUl-2E8YhZSwDLBPqCPRaCQYTtl8GBSgNa0kqkNPuLx9MrP_vvhdhFdd7XUWYF6gI0TXuNFKYX8HGE");'></div>
+</div>
+<div class="flex flex-1 flex-col justify-center min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-white text-base font-bold truncate pr-2">João Santos</h3>
+</div>
+<p class="text-text-secondary text-sm font-medium mt-0.5">(11) 98888-1111</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-text-secondary text-[14px]">calendar_today</span>
+<p class="text-text-secondary text-xs">Última visita: <span class="text-white">05 Set</span></p>
+</div>
+</div>
+<div class="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-surface-highlight text-text-secondary group-hover:text-white group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="group relative flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-transparent hover:border-surface-highlight active:scale-[0.99] transition-all cursor-pointer">
+<div class="relative shrink-0">
+<div class="flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 border-2 border-surface-highlight text-white font-bold text-lg">
+                        MO
+                    </div>
+</div>
+<div class="flex flex-1 flex-col justify-center min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-white text-base font-bold truncate pr-2">Marcos Oliveira</h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold">NOVO</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mt-0.5">(11) 97777-2222</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-text-secondary text-[14px]">calendar_today</span>
+<p class="text-text-secondary text-xs">Última visita: <span class="text-white">Ontem</span></p>
+</div>
+</div>
+<div class="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-surface-highlight text-text-secondary group-hover:text-white group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="group relative flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-transparent hover:border-surface-highlight active:scale-[0.99] transition-all cursor-pointer">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center border-2 border-surface-highlight" data-alt="Portrait of a serious man in suit" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAb0UzaWAv8fMP_R18yUhCpUOk6lsqX5Z5i-1H2_f5C2P4BOiYJ_WdZqIBXyVlTJUNghY-XcqGyM4cYKeVq82AiF_Fy6Hq1liSLrpEsXrlM4lHXi0CEx3eGxHf6vWv8zob81AL8AMtB6kMJwZnMx8wPnkHTl9GqDwMKHSPtarROGkzqcviosv2_h-vt5sqW8dyrhZH0MSfk7fwbUFY94y4ylD6xxaSZWlWZfzc0tjFHp0rGfPmB_8MBu9lrETV1KzwqTIOH-oBKEUE");'></div>
+</div>
+<div class="flex flex-1 flex-col justify-center min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-white text-base font-bold truncate pr-2">Carlos Eduardo</h3>
+</div>
+<p class="text-text-secondary text-sm font-medium mt-0.5">(21) 96543-2109</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-text-secondary text-[14px]">calendar_today</span>
+<p class="text-text-secondary text-xs">Última visita: <span class="text-white">20 Ago</span></p>
+</div>
+</div>
+<div class="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-surface-highlight text-text-secondary group-hover:text-white group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- List Item 5 -->
+<div class="group relative flex items-center gap-4 p-4 rounded-2xl bg-surface-dark border border-transparent hover:border-surface-highlight active:scale-[0.99] transition-all cursor-pointer">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center border-2 border-surface-highlight" data-alt="Portrait of a man with short hair looking up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZ45ayFElZ0Pt_YzOO_dFeeC6DbXgfni9Byy6Wq2u6u8GQv61YTNyp8y7_0krg163A5t0QAG_HRSWJAjq69-cYhwwBbvsaGh4dw21xRUzSIZiRR9UMQKUk8ISH3E8QtiQlXNGBhBQXIqO26RlCNAugVqho26wD7rrnVrX0c3prI7SOZy93AqZHJneO7h3kYSXwX8_Y9AY4IA6IEHCvJCZfZiPKRDuOB1HK0czz-kkUaNiuaWZOPw2DNABODLiFEtA03mgE_NN1DlQ");'></div>
+</div>
+<div class="flex flex-1 flex-col justify-center min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-white text-base font-bold truncate pr-2">Felipe Costa</h3>
+</div>
+<p class="text-text-secondary text-sm font-medium mt-0.5">(11) 91234-5678</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-text-secondary text-[14px]">calendar_today</span>
+<p class="text-text-secondary text-xs">Última visita: <span class="text-white">15 Jul</span></p>
+</div>
+</div>
+<div class="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-surface-highlight text-text-secondary group-hover:text-white group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-24 right-5 z-50">
+<button class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/30 hover:bg-primary/90 hover:scale-110 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform">add</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-surface-dark/95 backdrop-blur-lg border-t border-surface-highlight px-4 pb-6 pt-2">
+<nav class="flex justify-between items-center gap-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-text-secondary hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">calendar_month</span>
+<span class="text-[10px] font-medium tracking-wide">Agenda</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<div class="bg-primary/10 px-4 py-1 rounded-full flex items-center justify-center mb-0.5">
+<span class="material-symbols-outlined text-[24px]">group</span>
+</div>
+<span class="text-[10px] font-bold tracking-wide">Clientes</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-text-secondary hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">payments</span>
+<span class="text-[10px] font-medium tracking-wide">Finanças</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-text-secondary hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">person</span>
+<span class="text-[10px] font-medium tracking-wide">Perfil</span>
+</a>
+</nav>
+</div>
+</div>
+</body></html>
