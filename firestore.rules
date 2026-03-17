@@ -17,12 +17,16 @@ service cloud.firestore {
       return signedIn() && exists(/databases/$(database)/documents/barbers/$(request.auth.uid));
     }
 
+    function staffIsActive() {
+      return staffExists() && staffDoc().data.active == true;
+    }
+
     function isOwner() {
-      return signedIn() && (bootstrapOwner() || (staffExists() && staffDoc().data.role == "owner"));
+      return signedIn() && (bootstrapOwner() || (staffIsActive() && staffDoc().data.role == "owner"));
     }
 
     function isStaff() {
-      return signedIn() && (bootstrapOwner() || staffExists());
+      return signedIn() && (bootstrapOwner() || staffIsActive());
     }
 
     function isOwnStaffProfile(barberId) {

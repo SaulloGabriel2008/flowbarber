@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel | Atelier Prime Barber</title>
     <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -137,7 +138,40 @@
                                     <select id="agenda-barber-filter"></select>
                                 </label>
                             </div>
-                            <div id="agenda-bookings-list" class="stack-grid"></div>
+                            <div class="agenda-admin-shell">
+                                <section class="agenda-calendar-panel">
+                                    <div class="agenda-calendar-header">
+                                        <button id="agenda-prev-month" class="ghost-button icon-button" type="button" aria-label="Mês anterior">&lt;</button>
+                                        <strong id="agenda-month-label">--</strong>
+                                        <button id="agenda-next-month" class="ghost-button icon-button" type="button" aria-label="Próximo mês">&gt;</button>
+                                    </div>
+                                    <div class="agenda-weekdays">
+                                        <span>Dom</span>
+                                        <span>Seg</span>
+                                        <span>Ter</span>
+                                        <span>Qua</span>
+                                        <span>Qui</span>
+                                        <span>Sex</span>
+                                        <span>Sáb</span>
+                                    </div>
+                                    <div id="agenda-days-grid" class="agenda-days-grid"></div>
+                                </section>
+
+                                <section class="agenda-slots-panel">
+                                    <div class="agenda-slots-header">
+                                        <strong id="agenda-selected-date-label">--</strong>
+                                        <small>Clique em um horário para preencher o lançamento manual.</small>
+                                    </div>
+                                    <div id="agenda-slots-grid" class="agenda-slots-grid"></div>
+                                </section>
+                            </div>
+                            <div class="agenda-bookings-block">
+                                <div class="agenda-bookings-heading">
+                                    <strong>Atendimentos do dia</strong>
+                                    <small id="agenda-bookings-count">0 agendamentos</small>
+                                </div>
+                                <div id="agenda-bookings-list" class="stack-grid"></div>
+                            </div>
                         </article>
 
                         <article class="panel">
@@ -166,7 +200,7 @@
                                 </label>
                                 <label>
                                     <span>Horário</span>
-                                    <input type="time" id="quick-booking-time">
+                                    <input type="time" id="quick-booking-time" readonly>
                                 </label>
                                 <label>
                                     <span>Observações</span>

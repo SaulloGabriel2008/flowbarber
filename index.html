@@ -8,6 +8,7 @@
     <meta name="description"
         content="Barbearia profissional com agendamento online, equipe multi-barbeiros, planos de assinatura e atendimento premium.">
     <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -199,9 +200,11 @@
                                     <p>Os horários são atualizados para o barbeiro selecionado.</p>
                                 </div>
                             </header>
-                            <div class="date-field-wrap">
-                                <label for="booking-date">Data desejada</label>
-                                <input type="date" id="booking-date">
+                            <div class="booking-date-shell">
+                                <div class="date-field-wrap booking-date-field">
+                                    <label for="booking-date">Data desejada</label>
+                                    <input type="date" id="booking-date">
+                                </div>
                             </div>
                             <div id="booking-slot-feedback" class="slot-feedback"></div>
                             <div id="booking-slots-grid" class="time-grid"></div>

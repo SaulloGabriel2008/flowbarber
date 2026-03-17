@@ -1,7 +1,11 @@
+import { deleteApp, initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import {
+    createUserWithEmailAndPassword,
+    getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut,
+    updateProfile as updateAuthProfile,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import {
     addDoc,
@@ -17,8 +21,7 @@ import {
     updateDoc,
     where,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-import { httpsCallable } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-functions.js";
-import { auth, bootstrapOwnerEmail, db, functions, vapidKey } from "../shared/firebase.js";
+import { auth, bootstrapOwnerEmail, db, firebaseConfig, vapidKey } from "../shared/firebase.js";
 import {
     DEFAULT_BARBERSHOP_INFO,
     DEFAULT_FEATURE_FLAGS,
@@ -164,9 +167,6 @@ const state = {
 
 const listeners = [];
 
-const callUpsertBarberAccount = httpsCallable(functions, "upsertBarberAccount");
-const callMigrateLegacyData = httpsCallable(functions, "migrateLegacyData");
-
 init();
 
 function init() {
@@ -231,7 +231,6 @@ function observeAuth() {
             applyRoleVisibility();
             hydrateProfileUI();
             subscribeData();
-            await enableNotifications();
         } catch (error) {
             console.error(error);
             refs.loginError.textContent = error.message || "Usuário não autorizado para o painel.";
@@ -257,7 +256,11 @@ async function ensureStaffProfile(user) {
     const barberRef = doc(db, "barbers", user.uid);
     const barberSnap = await getDoc(barberRef);
     if (barberSnap.exists()) {
-        return normalizeBarber({ id: barberSnap.id, authUid: barberSnap.id, ...barberSnap.data() });
+        const profile = normalizeBarber({ id: barberSnap.id, authUid: barberSnap.id, ...barberSnap.data() });
+        if (profile.active === false) {
+            throw new Error("Seu acesso ao painel está desativado.");
+        }
+        return profile;
     }
 
     if (String(user.email || "").toLowerCase() !== bootstrapOwnerEmail.toLowerCase()) {
@@ -1058,42 +1061,42 @@ async function saveService(event) {
 
 async function saveBarber(event) {
     event.preventDefault();
-    const existingId = refs.barberEditId.value;
-    const requestedId = existingId || "";
-    const accountResult = await callUpsertBarberAccount({
-        barberId: requestedId,
-        email: refs.barberEmail.value.trim(),
-        password: refs.barberPassword.value.trim(),
-        name: refs.barberName.value.trim(),
-        role: refs.barberRole.value,
-        active: refs.barberActive.checked,
-    });
+    try {
+        const existingId = refs.barberEditId.value;
+        const barberId = await ensureBarberAuthAccount(existingId);
+        const schedule = collectScheduleFromForm();
+        const profile = normalizeBarber({
+            id: barberId,
+            authUid: barberId,
+            name: refs.barberName.value.trim(),
+            email: refs.barberEmail.value.trim(),
+            phone: digitsOnly(refs.barberPhone.value),
+            role: refs.barberRole.value,
+            active: refs.barberActive.checked,
+            acceptsBookings: refs.barberAcceptsBookings.checked,
+            commissionPercent: toNumber(refs.barberCommission.value, 35),
+            color: refs.barberColor.value,
+            headline: refs.barberHeadline.value.trim(),
+            daysOff: refs.barberDaysOff.value.split(",").map((item) => item.trim()).filter(Boolean),
+            serviceIds: collectCheckedValues(refs.barberServicesChecklist),
+            weeklySchedule: schedule,
+        });
 
-    const barberId = accountResult.data.barberId;
-    const schedule = collectScheduleFromForm();
-    const profile = normalizeBarber({
-        id: barberId,
-        authUid: accountResult.data.authUid || barberId,
-        name: refs.barberName.value.trim(),
-        email: refs.barberEmail.value.trim(),
-        phone: digitsOnly(refs.barberPhone.value),
-        role: refs.barberRole.value,
-        active: refs.barberActive.checked,
-        acceptsBookings: refs.barberAcceptsBookings.checked,
-        commissionPercent: toNumber(refs.barberCommission.value, 35),
-        color: refs.barberColor.value,
-        headline: refs.barberHeadline.value.trim(),
-        daysOff: refs.barberDaysOff.value.split(",").map((item) => item.trim()).filter(Boolean),
-        serviceIds: collectCheckedValues(refs.barberServicesChecklist),
-        weeklySchedule: schedule,
-    });
-
-    await persistBarberProfile(profile);
-    refs.barberForm.reset();
-    refs.barberEditId.value = "";
-    refs.barberServicesChecklist.innerHTML = buildChecklist(state.services, "");
-    refs.barberScheduleEditor.innerHTML = buildScheduleEditor();
-    toast("Barbeiro salvo.", "success");
+        await persistBarberProfile(profile);
+        refs.barberForm.reset();
+        refs.barberEditId.value = "";
+        refs.barberServicesChecklist.innerHTML = buildChecklist(state.services, "");
+        refs.barberScheduleEditor.innerHTML = buildScheduleEditor();
+        toast("Barbeiro salvo.", "success");
+    } catch (error) {
+        console.error(error);
+        const message = String(error?.message || "");
+        if (message.includes("internal") || message.includes("NOT_FOUND") || message.includes("404")) {
+            toast("O backend de barbeiros não está publicado no projeto Firebase. Faça o deploy das functions.", "error");
+            return;
+        }
+        toast(message || "Não foi possível salvar o barbeiro.", "error");
+    }
 }
 
 async function saveSettings(event) {
@@ -1117,7 +1120,7 @@ async function saveSettings(event) {
 }
 
 async function runMigration() {
-    await callMigrateLegacyData();
+    await runLocalMigration();
     toast("Migração executada.", "success");
 }
 
@@ -1253,6 +1256,100 @@ async function persistBarberProfile(profile) {
         photoUrl: "",
         updatedAt: serverTimestamp(),
     }, { merge: true });
+}
+
+async function ensureBarberAuthAccount(existingId) {
+    const email = refs.barberEmail.value.trim();
+    const password = refs.barberPassword.value.trim();
+    const name = refs.barberName.value.trim();
+
+    if (!email || !name) {
+        throw new Error("Preencha nome e e-mail do barbeiro.");
+    }
+
+    if (existingId) {
+        const current = state.barbers.find((item) => item.id === existingId);
+        const emailChanged = current && current.email && current.email !== email;
+        if (emailChanged || password) {
+            throw new Error("Alteração de e-mail ou senha de barbeiro existente requer Cloud Functions em plano Blaze. Edite apenas os dados operacionais por enquanto.");
+        }
+        return existingId;
+    }
+
+    if (password.length < 6) {
+        throw new Error("Defina uma senha inicial com pelo menos 6 caracteres.");
+    }
+
+    const secondaryName = `barber-provision-${Date.now()}`;
+    const secondaryApp = initializeApp(firebaseConfig, secondaryName);
+    try {
+        const secondaryAuth = getAuth(secondaryApp);
+        const credentials = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+        await updateAuthProfile(credentials.user, { displayName: name });
+        await signOut(secondaryAuth);
+        return credentials.user.uid;
+    } finally {
+        await deleteApp(secondaryApp).catch(() => undefined);
+    }
+}
+
+async function runLocalMigration() {
+    if (!state.services.length) {
+        await seedDefaultServices();
+    }
+
+    const ownerProfile = normalizeBarber({
+        id: state.profile.id,
+        authUid: state.profile.id,
+        name: state.profile.name,
+        email: state.profile.email,
+        phone: state.profile.phone,
+        role: "owner",
+        active: true,
+        acceptsBookings: true,
+        commissionPercent: state.profile.commissionPercent || 35,
+        serviceIds: state.services.map((service) => service.id),
+        weeklySchedule: state.profile.weeklySchedule || DEFAULT_WEEKLY_SCHEDULE,
+        color: state.profile.color || "#c89b53",
+        headline: state.profile.headline || "Perfil inicial de dono",
+    });
+    await persistBarberProfile(ownerProfile);
+
+    for (const barber of state.barbers) {
+        await persistBarberProfile(barber);
+    }
+
+    const defaultBarber = state.barbers[0] || ownerProfile;
+    const servicesMap = new Map((state.services.length ? state.services : DEFAULT_SERVICES.map(normalizeService)).map((service) => [service.id, service]));
+
+    for (const booking of state.bookings) {
+        const service = servicesMap.get(booking.serviceId)
+            || state.services.find((item) => item.name === booking.serviceNameSnapshot)
+            || state.services[0]
+            || normalizeService(DEFAULT_SERVICES[0]);
+        const barber = state.barbers.find((item) => item.id === booking.barberId) || defaultBarber;
+        const financials = calculateBookingFinancials({
+            basePrice: booking.priceSnapshot || service.price,
+            extras: booking.extras || [],
+            commissionPercent: barber.commissionPercent,
+            isSubscription: booking.isSubscription,
+        });
+
+        await updateDoc(doc(db, "agendamentos", booking.id), {
+            barberId: booking.barberId || barber.id,
+            barberNameSnapshot: booking.barberNameSnapshot || barber.name,
+            serviceId: booking.serviceId || service.id,
+            serviceNameSnapshot: booking.serviceNameSnapshot || service.name,
+            duration: booking.duration || service.duration,
+            commissionPercent: booking.commissionPercent || barber.commissionPercent,
+            priceSnapshot: financials.basePrice,
+            cashAmount: financials.cashAmount,
+            productionAmount: financials.productionAmount,
+            ownerCommissionAmount: financials.ownerCommissionAmount,
+            barberNetAmount: financials.barberNetAmount,
+            updatedAt: serverTimestamp(),
+        });
+    }
 }
 
 function collectCheckedValues(container) {
