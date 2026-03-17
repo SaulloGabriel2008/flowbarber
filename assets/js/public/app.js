@@ -545,25 +545,31 @@ async function renderSlots() {
     });
 
     const baseTimes = buildTimeSlots(schedule, service.duration);
-    const availableTimes = baseTimes.filter((slot) => {
+    const slotStates = baseTimes.map((slot) => {
         const startMinutes = timeToMinutes(slot);
         const requiredSlots = Math.max(1, Math.ceil(service.duration / 30));
         for (let index = 0; index < requiredSlots; index += 1) {
             if (occupiedSlots.has(startMinutes + (index * 30))) {
-                return false;
+                return { slot, disabled: true };
             }
         }
-        return !isPastSlot(state.selectedDate, slot);
+        return { slot, disabled: isPastSlot(state.selectedDate, slot) };
     });
+    const availableTimes = slotStates.filter((entry) => !entry.disabled).map((entry) => entry.slot);
+
+    if (state.selectedTime && !availableTimes.includes(state.selectedTime)) {
+        state.selectedTime = "";
+        renderSummary();
+    }
 
     if (!availableTimes.length) {
         refs.bookingSlotFeedback.textContent = "Nenhum horário disponível para essa combinação. Tente outra data.";
         return;
     }
 
-    refs.bookingSlotFeedback.textContent = `Horários livres para ${barber.name}.`;
-    refs.bookingSlotsGrid.innerHTML = availableTimes.map((slot) => `
-        <button type="button" class="${slot === state.selectedTime ? "active" : ""}" data-slot="${slot}">${slot}</button>
+    refs.bookingSlotFeedback.textContent = `Selecione um horário livre para ${barber.name}.`;
+    refs.bookingSlotsGrid.innerHTML = slotStates.map(({ slot, disabled }) => `
+        <button type="button" class="${slot === state.selectedTime ? "active" : ""}" data-slot="${slot}" ${disabled ? "disabled" : ""}>${slot}</button>
     `).join("");
 }
 

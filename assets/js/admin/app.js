@@ -36,6 +36,7 @@ import {
     summarizeDashboard,
 } from "../shared/data.js";
 import {
+    buildTimeSlots,
     DEFAULT_WEEKLY_SCHEDULE,
     compareBookings,
     currency,
@@ -45,6 +46,7 @@ import {
     formatDateTime,
     formatPhone,
     getTodayISO,
+    getWeekdayKey,
     normalizeWeeklySchedule,
     parseFirestoreDate,
     timeToMinutes,
@@ -77,6 +79,13 @@ const refs = {
     dashboardUpcoming: document.getElementById("dashboard-upcoming"),
     agendaDate: document.getElementById("agenda-date"),
     agendaBarberFilter: document.getElementById("agenda-barber-filter"),
+    agendaPrevMonth: document.getElementById("agenda-prev-month"),
+    agendaNextMonth: document.getElementById("agenda-next-month"),
+    agendaMonthLabel: document.getElementById("agenda-month-label"),
+    agendaDaysGrid: document.getElementById("agenda-days-grid"),
+    agendaSelectedDateLabel: document.getElementById("agenda-selected-date-label"),
+    agendaSlotsGrid: document.getElementById("agenda-slots-grid"),
+    agendaBookingsCount: document.getElementById("agenda-bookings-count"),
     agendaBookingsList: document.getElementById("agenda-bookings-list"),
     quickBookingForm: document.getElementById("quick-booking-form"),
     quickClientName: document.getElementById("quick-client-name"),
@@ -161,6 +170,7 @@ const state = {
         barbershop: { ...DEFAULT_BARBERSHOP_INFO },
         features: { ...DEFAULT_FEATURE_FLAGS },
     },
+    agendaMonth: getTodayISO().slice(0, 7),
     selectedAgendaBookingId: "",
     bootstrappedServices: false,
 };
@@ -177,7 +187,6 @@ function init() {
         year: "numeric",
     });
     refs.agendaDate.value = getTodayISO();
-    refs.agendaDate.min = getTodayISO();
     registerServiceWorker();
     bindEvents();
     observeAuth();
@@ -191,9 +200,31 @@ function bindEvents() {
     refs.refreshButton.addEventListener("click", () => renderCurrentView());
     refs.navButtons.forEach((button) => button.addEventListener("click", () => setView(button.dataset.view)));
     refs.dashboardBarberFilter.addEventListener("change", renderDashboard);
-    refs.agendaDate.addEventListener("change", renderAgenda);
-    refs.agendaBarberFilter.addEventListener("change", renderAgenda);
+    refs.agendaDate.addEventListener("change", () => {
+        state.agendaMonth = (refs.agendaDate.value || getTodayISO()).slice(0, 7);
+        refs.quickBookingTime.value = "";
+        renderAgenda();
+    });
+    refs.agendaBarberFilter.addEventListener("change", () => {
+        if (state.role === "owner" && refs.agendaBarberFilter.value && refs.agendaBarberFilter.value !== "all") {
+            refs.quickBarberId.value = refs.agendaBarberFilter.value;
+        }
+        refs.quickBookingTime.value = "";
+        renderAgenda();
+    });
+    refs.agendaPrevMonth.addEventListener("click", () => shiftAgendaMonth(-1));
+    refs.agendaNextMonth.addEventListener("click", () => shiftAgendaMonth(1));
+    refs.agendaDaysGrid.addEventListener("click", handleAgendaDaySelection);
+    refs.agendaSlotsGrid.addEventListener("click", handleAgendaSlotSelection);
     refs.quickBookingForm.addEventListener("submit", saveQuickBooking);
+    refs.quickServiceId.addEventListener("change", () => {
+        refs.quickBookingTime.value = "";
+        renderAgenda();
+    });
+    refs.quickBarberId.addEventListener("change", () => {
+        refs.quickBookingTime.value = "";
+        renderAgenda();
+    });
     refs.expenseForm.addEventListener("submit", saveExpense);
     refs.entryForm.addEventListener("submit", saveEntry);
     refs.planForm.addEventListener("submit", savePlan);
@@ -534,7 +565,16 @@ function renderAgenda() {
         const dateMatch = booking.data === selectedDate;
         const barberMatch = !selectedBarberId || selectedBarberId === "all" || booking.barberId === selectedBarberId;
         return dateMatch && barberMatch;
+    }).sort(compareBookings);
+
+    renderAgendaCalendar(selectedDate, selectedBarberId);
+    renderAgendaSlots(selectedDate);
+    refs.agendaSelectedDateLabel.textContent = formatDate(selectedDate, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
     });
+    refs.agendaBookingsCount.textContent = `${filtered.length} agendamento${filtered.length === 1 ? "" : "s"}`;
 
     refs.agendaBookingsList.innerHTML = filtered.map((booking) => `
         <article class="agenda-card ${state.selectedAgendaBookingId === booking.id ? "active" : ""}" data-booking-id="${booking.id}">
@@ -553,6 +593,135 @@ function renderAgenda() {
         state.selectedAgendaBookingId = filtered[0]?.id || "";
     }
     renderAgendaDetail();
+}
+
+function renderAgendaCalendar(selectedDate, selectedBarberId) {
+    const monthKey = state.agendaMonth || selectedDate.slice(0, 7);
+    const [year, month] = monthKey.split("-").map(Number);
+    const monthDate = new Date(year, month - 1, 1, 12, 0, 0);
+    refs.agendaMonthLabel.textContent = monthDate.toLocaleDateString("pt-BR", {
+        month: "long",
+        year: "numeric",
+    }).toUpperCase();
+
+    const firstDayIndex = new Date(year, month - 1, 1, 12, 0, 0).getDay();
+    const cells = [];
+
+    for (let index = 0; index < 42; index += 1) {
+        const offset = index - firstDayIndex;
+        const current = new Date(year, month - 1, 1 + offset, 12, 0, 0);
+        const dateISO = [
+            current.getFullYear(),
+            String(current.getMonth() + 1).padStart(2, "0"),
+            String(current.getDate()).padStart(2, "0"),
+        ].join("-");
+        const isOutside = current.getMonth() !== monthDate.getMonth();
+        const dayBookings = state.bookings.filter((booking) => {
+            if (booking.data !== dateISO || booking.status === "cancelled") return false;
+            return !selectedBarberId || selectedBarberId === "all" || booking.barberId === selectedBarberId;
+        });
+        const dots = Math.min(dayBookings.length, 4);
+        cells.push(`
+            <button
+                type="button"
+                class="agenda-day ${isOutside ? "is-outside" : ""} ${dateISO === selectedDate ? "is-selected" : ""} ${dateISO === getTodayISO() ? "is-today" : ""}"
+                data-agenda-date="${dateISO}">
+                <span class="agenda-day-number">${current.getDate()}</span>
+                <span class="agenda-day-meta">
+                    <span class="agenda-day-dots">${Array.from({ length: dots }, () => "<span></span>").join("")}</span>
+                    <span class="agenda-day-count">${dayBookings.length ? `${dayBookings.length} atend.` : ""}</span>
+                </span>
+            </button>
+        `);
+    }
+
+    refs.agendaDaysGrid.innerHTML = cells.join("");
+}
+
+function renderAgendaSlots(selectedDate) {
+    const barber = getAgendaActiveBarber();
+    const service = state.services.find((item) => item.id === refs.quickServiceId.value);
+    const duration = Math.max(30, toNumber(service?.duration, 30));
+    refs.agendaSlotsGrid.innerHTML = "";
+
+    if (!barber) {
+        refs.agendaSlotsGrid.innerHTML = `<div class="empty-state">Selecione um barbeiro para visualizar os horários.</div>`;
+        return;
+    }
+
+    if (barber.daysOff?.includes(selectedDate)) {
+        refs.agendaSlotsGrid.innerHTML = `<div class="empty-state">${escapeHtml(barber.name)} está indisponível nesta data.</div>`;
+        return;
+    }
+
+    const schedule = barber.weeklySchedule?.[getWeekdayKey(selectedDate)];
+    if (!schedule?.opens) {
+        refs.agendaSlotsGrid.innerHTML = `<div class="empty-state">${escapeHtml(barber.name)} não atende nesse dia.</div>`;
+        return;
+    }
+
+    const slots = buildTimeSlots(schedule, duration);
+    if (!slots.length) {
+        refs.agendaSlotsGrid.innerHTML = `<div class="empty-state">Nenhum horário configurado para este dia.</div>`;
+        return;
+    }
+
+    refs.agendaSlotsGrid.innerHTML = slots.map((slot) => {
+        const disabled = hasConflict({ barberId: barber.id, date: selectedDate, time: slot, duration }) || isPastAdminSlot(selectedDate, slot);
+        return `
+            <button
+                type="button"
+                class="agenda-slot-button ${refs.quickBookingTime.value === slot ? "active" : ""}"
+                data-agenda-slot="${slot}"
+                ${disabled ? "disabled" : ""}>
+                ${slot}
+            </button>
+        `;
+    }).join("");
+}
+
+function getAgendaActiveBarber() {
+    const barberId = state.role === "owner"
+        ? (refs.quickBarberId.value || (refs.agendaBarberFilter.value !== "all" ? refs.agendaBarberFilter.value : ""))
+        : state.profile?.id;
+    return state.barbers.find((item) => item.id === barberId) || null;
+}
+
+function shiftAgendaMonth(amount) {
+    const [year, month] = (state.agendaMonth || getTodayISO().slice(0, 7)).split("-").map(Number);
+    const date = new Date(year, month - 1 + amount, 1, 12, 0, 0);
+    const nextMonth = [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+    ].join("-");
+    state.agendaMonth = nextMonth;
+
+    const currentDate = refs.agendaDate.value || getTodayISO();
+    if (!currentDate.startsWith(nextMonth)) {
+        refs.agendaDate.value = `${nextMonth}-01`;
+    }
+    refs.quickBookingTime.value = "";
+    renderAgenda();
+}
+
+function handleAgendaDaySelection(event) {
+    const button = event.target.closest("[data-agenda-date]");
+    if (!button) return;
+    refs.agendaDate.value = button.dataset.agendaDate;
+    state.agendaMonth = button.dataset.agendaDate.slice(0, 7);
+    refs.quickBookingTime.value = "";
+    renderAgenda();
+}
+
+function handleAgendaSlotSelection(event) {
+    const button = event.target.closest("[data-agenda-slot]");
+    if (!button || button.disabled) return;
+    refs.quickBookingTime.value = button.dataset.agendaSlot;
+    renderAgendaSlots(refs.agendaDate.value || getTodayISO());
+}
+
+function isPastAdminSlot(dateISO, time) {
+    return new Date(`${dateISO}T${time}:00`).getTime() < Date.now();
 }
 
 function renderAgendaDetail() {

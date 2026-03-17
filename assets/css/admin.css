@@ -432,6 +432,178 @@ select:focus {
     background: rgba(210, 171, 103, 0.1);
 }
 
+.agenda-admin-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.95fr);
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.agenda-calendar-panel,
+.agenda-slots-panel,
+.agenda-bookings-block {
+    border-radius: 24px;
+    border: 1px solid rgba(210, 171, 103, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 18px;
+}
+
+.agenda-calendar-header,
+.agenda-slots-header,
+.agenda-bookings-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.agenda-calendar-header {
+    align-items: center;
+}
+
+.agenda-calendar-header strong,
+#agenda-selected-date-label {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.icon-button {
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 14px;
+}
+
+.agenda-weekdays,
+.agenda-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.agenda-weekdays {
+    margin: 16px 0 10px;
+    color: var(--muted);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.agenda-weekdays span {
+    text-align: center;
+}
+
+.agenda-days-grid {
+    gap: 6px;
+}
+
+.agenda-day {
+    min-height: 88px;
+    border-radius: 18px;
+    border: 1px solid rgba(210, 171, 103, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text);
+    padding: 10px;
+    text-align: left;
+    display: grid;
+    align-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    transition: 180ms ease;
+}
+
+.agenda-day:hover {
+    border-color: rgba(210, 171, 103, 0.26);
+    transform: translateY(-1px);
+}
+
+.agenda-day.is-outside {
+    opacity: 0.28;
+}
+
+.agenda-day.is-today {
+    border-color: rgba(255, 255, 255, 0.26);
+}
+
+.agenda-day.is-selected {
+    border-color: #2292ff;
+    box-shadow: 0 0 0 1px rgba(34, 146, 255, 0.65) inset;
+}
+
+.agenda-day-number {
+    font-weight: 700;
+}
+
+.agenda-day-meta {
+    display: grid;
+    gap: 6px;
+}
+
+.agenda-day-dots {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.agenda-day-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #2292ff;
+}
+
+.agenda-day-count,
+.agenda-slots-header small,
+.agenda-bookings-heading small {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.agenda-slots-header {
+    align-items: start;
+    flex-direction: column;
+}
+
+.agenda-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.agenda-slot-button {
+    border-radius: 14px;
+    border: 1px solid rgba(210, 171, 103, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text);
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 180ms ease;
+}
+
+.agenda-slot-button:hover,
+.agenda-slot-button.active {
+    border-color: #2292ff;
+    background: rgba(34, 146, 255, 0.16);
+}
+
+.agenda-slot-button[disabled] {
+    opacity: 0.34;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.agenda-bookings-block {
+    margin-top: 16px;
+}
+
+.agenda-bookings-heading {
+    align-items: center;
+    margin-bottom: 14px;
+}
+
 .table-wrap {
     overflow: auto;
 }
@@ -615,6 +787,10 @@ th {
         grid-column: auto;
     }
 
+    .agenda-admin-shell {
+        grid-template-columns: 1fr;
+    }
+
     .topbar {
         flex-direction: column;
     }
@@ -633,6 +809,16 @@ th {
     .panel {
         padding: 18px;
         border-radius: 24px;
+    }
+
+    .agenda-days-grid {
+        gap: 4px;
+    }
+
+    .agenda-day {
+        min-height: 74px;
+        padding: 8px;
+        border-radius: 16px;
     }
 
     .sidebar {
