@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier Prime Barber</title>
+    <meta name="description"
+        content="Barbearia profissional com agendamento online, equipe multi-barbeiros, planos de assinatura e atendimento premium.">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+
+<body>
+    <div class="noise-layer"></div>
+
+    <header class="site-header">
+        <div class="container header-shell">
+            <a href="#inicio" class="brand-mark">
+                <span class="brand-monogram">AP</span>
+                <span>
+                    <strong id="brand-name">Atelier Prime Barber</strong>
+                    <small id="brand-slogan">Barbearia premium com agenda inteligente</small>
+                </span>
+            </a>
+
+            <nav class="main-nav" aria-label="Principal">
+                <a href="#servicos">Serviços</a>
+                <a href="#barbeiros">Barbeiros</a>
+                <a href="#agendamento">Agendamento</a>
+                <a href="#assinaturas">Assinaturas</a>
+                <a href="#cliente">Minha conta</a>
+            </nav>
+
+            <div class="header-actions">
+                <a class="ghost-link" href="/admin.html">Painel</a>
+                <a class="primary-link" href="#agendamento">Agendar agora</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow" id="hero-badge">Experiência premium com equipe multi-barbeiros</span>
+                    <h1 id="hero-title">Visual impecável, agenda organizada e operação profissional.</h1>
+                    <p id="hero-description">
+                        Atendimento focado em corte, barba, acabamento e gestão inteligente da rotina. Escolha o
+                        barbeiro, o serviço e confirme seu horário em poucos passos.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="primary-link" href="#agendamento">Reservar horário</a>
+                        <a class="ghost-link" href="#barbeiros">Conhecer a equipe</a>
+                    </div>
+
+                    <div class="hero-highlights">
+                        <div>
+                            <strong id="metric-barbers">0</strong>
+                            <span>Barbeiros ativos</span>
+                        </div>
+                        <div>
+                            <strong id="metric-services">0</strong>
+                            <span>Serviços no catálogo</span>
+                        </div>
+                        <div>
+                            <strong id="metric-memberships">Planos</strong>
+                            <span>Assinaturas recorrentes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-panel">
+                    <div class="hero-surface">
+                        <div class="hero-surface-top">
+                            <span class="surface-pill">Agenda ao vivo</span>
+                            <span class="surface-dot"></span>
+                        </div>
+
+                        <div class="hero-surface-main">
+                            <div class="surface-card strong">
+                                <span>Escolha o profissional</span>
+                                <strong>Barbeiros com agenda própria</strong>
+                                <p>Cada profissional tem horários, comissão, serviços e disponibilidade individual.</p>
+                            </div>
+
+                            <div class="surface-card">
+                                <span>Controle do cliente</span>
+                                <strong>Login, histórico e cancelamento</strong>
+                            </div>
+
+                            <div class="surface-card">
+                                <span>Planos recorrentes</span>
+                                <strong>Assinaturas com uso mensal</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="trust-strip">
+            <div class="container trust-grid">
+                <article>
+                    <span>01</span>
+                    <strong>Equipe escalável</strong>
+                    <p>Estrutura preparada para 2, 3 ou mais barbeiros sem remendo manual no HTML.</p>
+                </article>
+                <article>
+                    <span>02</span>
+                    <strong>Agenda precisa</strong>
+                    <p>Horários calculados por duração de serviço, folgas e disponibilidade do barbeiro.</p>
+                </article>
+                <article>
+                    <span>03</span>
+                    <strong>Gestão de relacionamento</strong>
+                    <p>Cliente acompanha agendamentos, assinatura ativa e próximos atendimentos.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="servicos" class="section-shell">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Catálogo profissional</span>
+                    <h2>Serviços com preço, duração e posicionamento premium</h2>
+                    <p>O catálogo é centralizado e alimenta tanto o site do cliente quanto o controle operacional.</p>
+                </div>
+
+                <div id="services-showcase" class="showcase-grid"></div>
+            </div>
+        </section>
+
+        <section id="barbeiros" class="section-shell team-shell">
+            <div class="container">
+                <div class="section-heading split">
+                    <div>
+                        <span class="eyebrow">Equipe</span>
+                        <h2>Barbeiros com identidade, agenda e especialidades próprias</h2>
+                    </div>
+                    <p>
+                        A equipe aparece automaticamente conforme o cadastro administrativo. Se entrar um novo barbeiro,
+                        ele passa a existir aqui sem editar código.
+                    </p>
+                </div>
+
+                <div id="team-grid" class="team-grid"></div>
+            </div>
+        </section>
+
+        <section id="agendamento" class="section-shell booking-shell">
+            <div class="container">
+                <div class="section-heading split">
+                    <div>
+                        <span class="eyebrow">Agendamento online</span>
+                        <h2>Escolha o serviço, o barbeiro e o melhor horário</h2>
+                    </div>
+                    <p>
+                        O cálculo de disponibilidade considera duração do serviço, horários do barbeiro, folgas e
+                        conflitos existentes.
+                    </p>
+                </div>
+
+                <div class="booking-grid">
+                    <div class="booking-stage">
+                        <article class="stage-card">
+                            <header class="stage-header">
+                                <span class="stage-index">01</span>
+                                <div>
+                                    <h3>Serviço</h3>
+                                    <p>Selecione o atendimento desejado.</p>
+                                </div>
+                            </header>
+                            <div id="booking-services-grid" class="booking-card-grid"></div>
+                        </article>
+
+                        <article class="stage-card">
+                            <header class="stage-header">
+                                <span class="stage-index">02</span>
+                                <div>
+                                    <h3>Barbeiro</h3>
+                                    <p>Veja os profissionais disponíveis para o serviço escolhido.</p>
+                                </div>
+                            </header>
+                            <div id="booking-barbers-grid" class="booking-card-grid team-mini-grid"></div>
+                        </article>
+
+                        <article class="stage-card">
+                            <header class="stage-header">
+                                <span class="stage-index">03</span>
+                                <div>
+                                    <h3>Data e horário</h3>
+                                    <p>Os horários são atualizados para o barbeiro selecionado.</p>
+                                </div>
+                            </header>
+                            <div class="date-field-wrap">
+                                <label for="booking-date">Data desejada</label>
+                                <input type="date" id="booking-date">
+                            </div>
+                            <div id="booking-slot-feedback" class="slot-feedback"></div>
+                            <div id="booking-slots-grid" class="time-grid"></div>
+                        </article>
+                    </div>
+
+                    <aside class="summary-panel">
+                        <div class="summary-card">
+                            <span class="eyebrow">Resumo do atendimento</span>
+                            <h3>Pronto para confirmar</h3>
+
+                            <div class="summary-rows">
+                                <div>
+                                    <span>Serviço</span>
+                                    <strong id="summary-service">Selecione um serviço</strong>
+                                </div>
+                                <div>
+                                    <span>Barbeiro</span>
+                                    <strong id="summary-barber">Selecione um barbeiro</strong>
+                                </div>
+                                <div>
+                                    <span>Horário</span>
+                                    <strong id="summary-slot">Escolha data e hora</strong>
+                                </div>
+                                <div>
+                                    <span>Tempo estimado</span>
+                                    <strong id="summary-duration">--</strong>
+                                </div>
+                            </div>
+
+                            <label class="notes-field" for="booking-notes">
+                                <span>Observações</span>
+                                <textarea id="booking-notes"
+                                    placeholder="Preferências, restrições ou detalhes importantes do atendimento"></textarea>
+                            </label>
+
+                            <div class="summary-price">
+                                <span>Total previsto</span>
+                                <strong id="summary-price">R$ 0,00</strong>
+                                <small id="summary-subscription-note"></small>
+                            </div>
+
+                            <button id="booking-submit" class="primary-button" type="button" disabled>
+                                Confirmar agendamento
+                            </button>
+
+                            <p class="micro-copy">
+                                Se você tiver uma assinatura ativa e o serviço estiver incluído no plano, o sistema
+                                aplica automaticamente o benefício.
+                            </p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="assinaturas" class="section-shell memberships-shell">
+            <div class="container">
+                <div class="section-heading split">
+                    <div>
+                        <span class="eyebrow">Assinaturas</span>
+                        <h2>Planos recorrentes para manter a rotina sempre alinhada</h2>
+                    </div>
+                    <p>
+                        Ideal para clientes frequentes: recorrência organizada, preço claro e uso controlado por mês.
+                    </p>
+                </div>
+
+                <div id="plans-grid" class="plans-grid"></div>
+            </div>
+        </section>
+
+        <section id="cliente" class="section-shell account-shell">
+            <div class="container">
+                <div class="section-heading split">
+                    <div>
+                        <span class="eyebrow">Minha conta</span>
+                        <h2>Acompanhe seus horários e sua assinatura</h2>
+                    </div>
+                    <p>
+                        Cadastro do cliente com histórico de agendamentos, cancelamento e visão do plano ativo.
+                    </p>
+                </div>
+
+                <div class="account-grid">
+                    <article class="account-card">
+                        <div id="auth-panel">
+                            <div class="auth-switch">
+                                <button id="btn-show-login" class="switch-btn active" type="button">Entrar</button>
+                                <button id="btn-show-signup" class="switch-btn" type="button">Criar conta</button>
+                            </div>
+
+                            <form id="login-form" class="auth-form">
+                                <h3>Acessar minha conta</h3>
+                                <label>
+                                    <span>E-mail ou telefone</span>
+                                    <input type="text" id="login-identifier" autocomplete="username">
+                                </label>
+                                <label>
+                                    <span>Senha</span>
+                                    <input type="password" id="login-password" autocomplete="current-password">
+                                </label>
+                                <button class="primary-button" type="submit">Entrar</button>
+                            </form>
+
+                            <form id="signup-form" class="auth-form hidden">
+                                <h3>Novo cadastro</h3>
+                                <label>
+                                    <span>Nome completo</span>
+                                    <input type="text" id="signup-name" autocomplete="name">
+                                </label>
+                                <label>
+                                    <span>Telefone</span>
+                                    <input type="text" id="signup-phone" autocomplete="tel">
+                                </label>
+                                <label>
+                                    <span>E-mail</span>
+                                    <input type="email" id="signup-email" autocomplete="email">
+                                </label>
+                                <label>
+                                    <span>Senha</span>
+                                    <input type="password" id="signup-password" autocomplete="new-password">
+                                </label>
+                                <button class="primary-button" type="submit">Criar conta</button>
+                            </form>
+                        </div>
+
+                        <div id="account-panel" class="hidden">
+                            <div class="account-profile">
+                                <div>
+                                    <span class="eyebrow">Cliente autenticado</span>
+                                    <h3 id="account-name">Cliente</h3>
+                                    <p id="account-contact">--</p>
+                                </div>
+                                <button id="logout-button" class="ghost-button" type="button">Sair</button>
+                            </div>
+
+                            <div class="account-kpis">
+                                <div>
+                                    <span>Próximo atendimento</span>
+                                    <strong id="account-next-booking">Sem horário futuro</strong>
+                                </div>
+                                <div>
+                                    <span>Status da assinatura</span>
+                                    <strong id="account-subscription-status">Sem assinatura</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="account-card">
+                        <div class="card-heading">
+                            <h3>Meus agendamentos</h3>
+                            <p>Visualize próximos horários e histórico recente.</p>
+                        </div>
+                        <div id="my-bookings-list" class="stack-list empty-state">
+                            Entre na sua conta para carregar seus agendamentos.
+                        </div>
+                    </article>
+
+                    <article class="account-card">
+                        <div class="card-heading">
+                            <h3>Minha assinatura</h3>
+                            <p>Plano atual, serviços inclusos e saldo mensal.</p>
+                        </div>
+                        <div id="my-subscription-panel" class="stack-list empty-state">
+                            Faça login para visualizar sua assinatura.
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-shell faq-shell">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">FAQ</span>
+                    <h2>Perguntas frequentes do cliente</h2>
+                </div>
+
+                <div class="faq-grid">
+                    <article>
+                        <h3>Posso escolher qualquer barbeiro?</h3>
+                        <p>Sim. O site mostra apenas os profissionais habilitados para o serviço escolhido.</p>
+                    </article>
+                    <article>
+                        <h3>Como funciona a assinatura?</h3>
+                        <p>Você contrata um plano recorrente com serviços inclusos. Ao agendar, o sistema aplica o uso
+                            do benefício quando elegível.</p>
+                    </article>
+                    <article>
+                        <h3>Consigo cancelar sozinho?</h3>
+                        <p>Sim. Os próximos agendamentos podem ser cancelados pela sua área do cliente.</p>
+                    </article>
+                    <article>
+                        <h3>Barbeiros diferentes podem atender no mesmo horário?</h3>
+                        <p>Sim. A disponibilidade é calculada por barbeiro, então agendas paralelas continuam livres.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <span class="eyebrow">Barbearia</span>
+                <h3 id="footer-name">Atelier Prime Barber</h3>
+                <p id="footer-address">Rua do Estilo, 142 - Centro</p>
+            </div>
+            <div>
+                <span class="eyebrow">Contato</span>
+                <a id="footer-phone" href="#">(11) 99999-9999</a>
+                <a id="footer-maps" href="https://maps.google.com/" target="_blank" rel="noreferrer">Abrir no mapa</a>
+            </div>
+            <div>
+                <span class="eyebrow">Operação</span>
+                <p>Site público com catálogo, agenda multi-barbeiros, login do cliente e assinaturas.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+    <script type="module" src="/assets/js/public/app.js"></script>
+</body>
+
+</html>

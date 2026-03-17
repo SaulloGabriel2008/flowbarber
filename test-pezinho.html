@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Pezinho</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .card { border: 1px solid #ccc; padding: 15px; background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Test: Services Loading</h1>
+    <div id="log" style="background: #000; color: #0f0; padding: 10px; margin: 10px 0; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;"></div>
+    
+    <h2>Services Grid:</h2>
+    <div class="grid" id="services-grid"></div>
+
+    <script>
+        const log = document.getElementById('log');
+        
+        function logIt(msg) {
+            console.log(msg);
+            log.innerHTML += msg + '<br>';
+            log.scrollTop = log.scrollHeight;
+        }
+
+        logIt('=== Test iniciado ===');
+        
+        const servicesData = [
+            { name: "Corte Masculino", duration: 30, price: 25 },
+            { name: "Corte Masculino só Tesoura", duration: 45, price: 30 },
+            { name: "Corte Masculino só Máquina", duration: 20, price: 20 },
+            { name: "Barba Completa", duration: 30, price: 25 },
+            { name: "Combos", duration: 60, price: 45 },
+            { name: "Corte Infantil", duration: 30, price: 35 },
+            { name: "Corte Infantil (Autismo)", duration: 45, price: 40 },
+            { name: "Pezinho", duration: 30, price: 10 },
+            { name: "Sobrancelha", duration: 15, price: 15 },
+            { name: "Pigmentação", duration: 20, price: 25 },
+            { name: "Depilação Nariz/Orelha", duration: 10, price: 10 }
+        ];
+
+        logIt('Services carregados: ' + servicesData.length);
+        logIt('Pezinho no array? ' + (servicesData.find(s => s.name === 'Pezinho') ? 'SIM' : 'NÃO'));
+
+        // Renderizar
+        const grid = document.getElementById('services-grid');
+        if (!grid) {
+            logIt('ERRO: grid não encontrado');
+        } else {
+            logIt('Grid encontrado, renderizando...');
+            
+            grid.innerHTML = servicesData.map(service => {
+                return `
+                    <div class="card">
+                        <h3>${service.name}</h3>
+                        <p>⏱ ${service.duration} MIN | R$ ${service.price}</p>
+                    </div>
+                `;
+            }).join('');
+            
+            logIt('Total cards renderizados: ' + grid.children.length);
+            
+            const pezinhoCard = Array.from(grid.children).find(card => card.innerText.includes('Pezinho'));
+            logIt('Pezinho card visível? ' + (pezinhoCard ? 'SIM' : 'NÃO'));
+        }
+    </script>
+</body>
+</html>

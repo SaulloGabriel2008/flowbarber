@@ -1,0 +1,106 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function bootstrapOwner() {
+      return signedIn() && request.auth.token.email == "saullinho2008@gmail.com";
+    }
+
+    function staffDoc() {
+      return get(/databases/$(database)/documents/barbers/$(request.auth.uid));
+    }
+
+    function staffExists() {
+      return signedIn() && exists(/databases/$(database)/documents/barbers/$(request.auth.uid));
+    }
+
+    function isOwner() {
+      return signedIn() && (bootstrapOwner() || (staffExists() && staffDoc().data.role == "owner"));
+    }
+
+    function isStaff() {
+      return signedIn() && (bootstrapOwner() || staffExists());
+    }
+
+    function isOwnStaffProfile(barberId) {
+      return signedIn() && request.auth.uid == barberId;
+    }
+
+    match /barbers/{barberId} {
+      allow read: if isOwner() || isOwnStaffProfile(barberId);
+      allow create, update, delete: if isOwner();
+    }
+
+    match /barbers_public/{barberId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /subscription_plans/{planId} {
+      allow read: if isStaff() || resource.data.active == true;
+      allow write: if isOwner();
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner() || (signedIn() && request.auth.uid == userId);
+      allow create: if signedIn() && request.auth.uid == userId;
+      allow update: if isOwner() || (signedIn() && request.auth.uid == userId);
+      allow delete: if isOwner();
+    }
+
+    match /agendamentos/{bookingId} {
+      allow read: if isOwner()
+        || (signedIn() && request.auth.uid == resource.data.userId)
+        || (signedIn() && request.auth.uid == resource.data.barberId);
+      allow create: if isOwner()
+        || (signedIn() && request.resource.data.userId == request.auth.uid)
+        || (signedIn() && request.resource.data.barberId == request.auth.uid);
+      allow update: if isOwner()
+        || (signedIn() && request.auth.uid == resource.data.userId)
+        || (signedIn() && request.auth.uid == resource.data.barberId);
+      allow delete: if isOwner();
+    }
+
+    match /assinaturas/{subscriptionId} {
+      allow read: if isOwner() || (signedIn() && request.auth.uid == resource.data.clientId);
+      allow create: if isOwner() || (signedIn() && request.resource.data.clientId == request.auth.uid);
+      allow update, delete: if isOwner();
+    }
+
+    match /despesas/{expenseId} {
+      allow read, write: if isOwner();
+    }
+
+    match /entradas_produtos/{entryId} {
+      allow read, write: if isOwner();
+    }
+
+    match /config_dias/{configId} {
+      allow read: if isStaff();
+      allow write: if isOwner();
+    }
+
+    match /barbeirosTokens/{tokenId} {
+      allow read: if isOwner() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create, update: if signedIn() && request.resource.data.uid == request.auth.uid;
+      allow delete: if isOwner() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+
+    match /configuracoes_gerais/{configId} {
+      allow read: if configId in ["barbearia", "features"] || isStaff();
+      allow write: if isOwner();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

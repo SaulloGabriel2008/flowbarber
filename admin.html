@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel | Atelier Prime Barber</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+
+<body>
+    <div class="admin-noise"></div>
+
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <span class="eyebrow">Painel operacional</span>
+            <h1>Controle profissional da barbearia</h1>
+            <p>Login do dono ou do barbeiro. O acesso às telas é limitado automaticamente pelo perfil cadastrado.</p>
+
+            <form id="login-form" class="login-form">
+                <label>
+                    <span>E-mail</span>
+                    <input type="email" id="login-email" autocomplete="username">
+                </label>
+                <label>
+                    <span>Senha</span>
+                    <input type="password" id="login-password" autocomplete="current-password">
+                </label>
+                <button type="submit" class="primary-button">Entrar no painel</button>
+            </form>
+
+            <p id="login-error" class="error-text hidden"></p>
+        </div>
+    </div>
+
+    <div id="admin-app" class="admin-app hidden">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-badge">AP</div>
+                <div>
+                    <strong id="sidebar-brand-name">Atelier Prime Barber</strong>
+                    <small>Painel owner / barber</small>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-view="dashboard" type="button">Dashboard</button>
+                <button class="nav-item" data-view="agenda" type="button">Agenda</button>
+                <button class="nav-item owner-only" data-view="clients" type="button">Clientes</button>
+                <button class="nav-item owner-only" data-view="finances" type="button">Finanças</button>
+                <button class="nav-item owner-only" data-view="subscriptions" type="button">Assinaturas</button>
+                <button class="nav-item owner-only" data-view="services" type="button">Serviços</button>
+                <button class="nav-item owner-only" data-view="barbers" type="button">Barbeiros</button>
+                <button class="nav-item owner-only" data-view="settings" type="button">Configurações</button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="profile-chip">
+                    <strong id="profile-name">Usuário</strong>
+                    <span id="profile-role">Perfil</span>
+                </div>
+                <button id="logout-button" class="ghost-button" type="button">Sair</button>
+            </div>
+        </aside>
+
+        <div class="main-shell">
+            <header class="topbar">
+                <div>
+                    <span class="eyebrow">Operação ao vivo</span>
+                    <h1 id="view-title">Dashboard</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <span id="today-label" class="today-label"></span>
+                    <button id="refresh-button" class="ghost-button" type="button">Atualizar</button>
+                </div>
+            </header>
+
+            <main class="content-shell">
+                <section id="view-dashboard" class="view active">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Indicadores</span>
+                                    <h2>Resumo operacional</h2>
+                                </div>
+                                <select id="dashboard-barber-filter" class="compact-select owner-only-inline"></select>
+                            </div>
+                            <div id="dashboard-kpis" class="kpi-grid"></div>
+                        </article>
+
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Equipe</span>
+                                    <h2>Produção por barbeiro</h2>
+                                </div>
+                            </div>
+                            <div id="dashboard-barber-cards" class="stack-grid"></div>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Agenda</span>
+                                    <h2>Próximos atendimentos</h2>
+                                </div>
+                            </div>
+                            <div id="dashboard-upcoming" class="stack-grid"></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-agenda" class="view">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Filtros</span>
+                                    <h2>Agenda do dia</h2>
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <label>
+                                    <span>Data</span>
+                                    <input type="date" id="agenda-date">
+                                </label>
+                                <label class="owner-only-block">
+                                    <span>Barbeiro</span>
+                                    <select id="agenda-barber-filter"></select>
+                                </label>
+                            </div>
+                            <div id="agenda-bookings-list" class="stack-grid"></div>
+                        </article>
+
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Novo atendimento</span>
+                                    <h2>Lançamento manual</h2>
+                                </div>
+                            </div>
+                            <form id="quick-booking-form" class="form-grid">
+                                <label>
+                                    <span>Cliente</span>
+                                    <input type="text" id="quick-client-name">
+                                </label>
+                                <label>
+                                    <span>Telefone</span>
+                                    <input type="text" id="quick-client-phone">
+                                </label>
+                                <label>
+                                    <span>Serviço</span>
+                                    <select id="quick-service-id"></select>
+                                </label>
+                                <label class="owner-only-block">
+                                    <span>Barbeiro</span>
+                                    <select id="quick-barber-id"></select>
+                                </label>
+                                <label>
+                                    <span>Horário</span>
+                                    <input type="time" id="quick-booking-time">
+                                </label>
+                                <label>
+                                    <span>Observações</span>
+                                    <textarea id="quick-booking-notes"></textarea>
+                                </label>
+                                <button type="submit" class="primary-button">Salvar agendamento</button>
+                            </form>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Detalhes</span>
+                                    <h2>Atendimento selecionado</h2>
+                                </div>
+                            </div>
+                            <div id="agenda-booking-detail" class="empty-state">
+                                Selecione um atendimento para visualizar detalhes, extras e ações.
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-clients" class="view owner-only-view">
+                    <div class="view-grid">
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Relacionamento</span>
+                                    <h2>Base de clientes</h2>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Contato</th>
+                                            <th>Visitas</th>
+                                            <th>Ticket médio</th>
+                                            <th>Última visita</th>
+                                            <th>Barbeiro favorito</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="clients-table-body"></tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-finances" class="view owner-only-view">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Resultado</span>
+                                    <h2>Resumo financeiro</h2>
+                                </div>
+                            </div>
+                            <div id="finance-kpis" class="kpi-grid"></div>
+                        </article>
+
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Despesas</span>
+                                    <h2>Novo lançamento</h2>
+                                </div>
+                            </div>
+                            <form id="expense-form" class="form-grid">
+                                <label>
+                                    <span>Descrição</span>
+                                    <input type="text" id="expense-description">
+                                </label>
+                                <label>
+                                    <span>Categoria</span>
+                                    <input type="text" id="expense-category">
+                                </label>
+                                <label>
+                                    <span>Valor</span>
+                                    <input type="number" step="0.01" id="expense-value">
+                                </label>
+                                <button type="submit" class="primary-button">Salvar despesa</button>
+                            </form>
+                        </article>
+
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Receitas extras</span>
+                                    <h2>Entrada de produto</h2>
+                                </div>
+                            </div>
+                            <form id="entry-form" class="form-grid">
+                                <label>
+                                    <span>Descrição</span>
+                                    <input type="text" id="entry-description">
+                                </label>
+                                <label>
+                                    <span>Valor</span>
+                                    <input type="number" step="0.01" id="entry-value">
+                                </label>
+                                <button type="submit" class="primary-button">Salvar entrada</button>
+                            </form>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Comissões</span>
+                                    <h2>Produção concluída por barbeiro</h2>
+                                </div>
+                            </div>
+                            <div id="commission-board" class="stack-grid"></div>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Movimentações</span>
+                                    <h2>Lançamentos recentes</h2>
+                                </div>
+                            </div>
+                            <div id="finance-ledger" class="stack-grid"></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-subscriptions" class="view owner-only-view">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Planos</span>
+                                    <h2>Novo plano</h2>
+                                </div>
+                            </div>
+                            <form id="plan-form" class="form-grid">
+                                <input type="hidden" id="plan-edit-id">
+                                <label>
+                                    <span>Nome</span>
+                                    <input type="text" id="plan-name">
+                                </label>
+                                <label>
+                                    <span>Valor</span>
+                                    <input type="number" step="0.01" id="plan-price">
+                                </label>
+                                <label>
+                                    <span>Frequência</span>
+                                    <select id="plan-frequency">
+                                        <option value="monthly">Mensal</option>
+                                        <option value="quarterly">Trimestral</option>
+                                        <option value="semiannual">Semestral</option>
+                                        <option value="annual">Anual</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Limite mensal por serviço</span>
+                                    <input type="number" id="plan-monthly-limit" min="1" value="4">
+                                </label>
+                                <label class="wide">
+                                    <span>Descrição</span>
+                                    <textarea id="plan-description"></textarea>
+                                </label>
+                                <div class="wide">
+                                    <span class="field-label">Serviços incluídos</span>
+                                    <div id="plan-services-checklist" class="checklist-grid"></div>
+                                </div>
+                                <button type="submit" class="primary-button">Salvar plano</button>
+                            </form>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Catálogo ativo</span>
+                                    <h2>Planos publicados</h2>
+                                </div>
+                            </div>
+                            <div id="plans-admin-list" class="stack-grid"></div>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Clientes</span>
+                                    <h2>Assinaturas ativas</h2>
+                                </div>
+                            </div>
+                            <div id="subscriptions-admin-list" class="stack-grid"></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-services" class="view owner-only-view">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Catálogo</span>
+                                    <h2>Novo serviço</h2>
+                                </div>
+                            </div>
+                            <form id="service-form" class="form-grid">
+                                <input type="hidden" id="service-edit-id">
+                                <label>
+                                    <span>Nome</span>
+                                    <input type="text" id="service-name">
+                                </label>
+                                <label>
+                                    <span>Preço</span>
+                                    <input type="number" step="0.01" id="service-price">
+                                </label>
+                                <label>
+                                    <span>Duração (min)</span>
+                                    <input type="number" id="service-duration" min="15" step="15">
+                                </label>
+                                <label>
+                                    <span>Categoria</span>
+                                    <input type="text" id="service-category">
+                                </label>
+                                <label class="wide">
+                                    <span>Descrição</span>
+                                    <textarea id="service-description"></textarea>
+                                </label>
+                                <button type="submit" class="primary-button">Salvar serviço</button>
+                            </form>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Serviços</span>
+                                    <h2>Catálogo publicado</h2>
+                                </div>
+                            </div>
+                            <div id="services-admin-list" class="stack-grid"></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-barbers" class="view owner-only-view">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Equipe</span>
+                                    <h2>Novo barbeiro</h2>
+                                </div>
+                            </div>
+                            <form id="barber-form" class="form-grid">
+                                <input type="hidden" id="barber-edit-id">
+                                <label>
+                                    <span>Nome</span>
+                                    <input type="text" id="barber-name">
+                                </label>
+                                <label>
+                                    <span>E-mail de login</span>
+                                    <input type="email" id="barber-email">
+                                </label>
+                                <label>
+                                    <span>Senha inicial / nova senha</span>
+                                    <input type="password" id="barber-password">
+                                </label>
+                                <label>
+                                    <span>Telefone</span>
+                                    <input type="text" id="barber-phone">
+                                </label>
+                                <label>
+                                    <span>Papel</span>
+                                    <select id="barber-role">
+                                        <option value="barber">Barbeiro</option>
+                                        <option value="owner">Dono</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Comissão do dono (%)</span>
+                                    <input type="number" id="barber-commission" min="0" max="100" value="35">
+                                </label>
+                                <label>
+                                    <span>Cor de destaque</span>
+                                    <input type="color" id="barber-color" value="#c89b53">
+                                </label>
+                                <label>
+                                    <span>Headline</span>
+                                    <input type="text" id="barber-headline">
+                                </label>
+                                <label class="toggle-line">
+                                    <input type="checkbox" id="barber-active" checked>
+                                    <span>Barbeiro ativo</span>
+                                </label>
+                                <label class="toggle-line">
+                                    <input type="checkbox" id="barber-accepts-bookings" checked>
+                                    <span>Recebe agendamentos</span>
+                                </label>
+                                <label class="wide">
+                                    <span>Folgas específicas (datas ISO separadas por vírgula)</span>
+                                    <input type="text" id="barber-days-off" placeholder="2026-03-20, 2026-03-28">
+                                </label>
+                                <div class="wide">
+                                    <span class="field-label">Serviços habilitados</span>
+                                    <div id="barber-services-checklist" class="checklist-grid"></div>
+                                </div>
+                                <div class="wide">
+                                    <span class="field-label">Horários de trabalho</span>
+                                    <div id="barber-schedule-editor" class="schedule-grid"></div>
+                                </div>
+                                <button type="submit" class="primary-button">Salvar barbeiro</button>
+                            </form>
+                        </article>
+
+                        <article class="panel wide">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Equipe ativa</span>
+                                    <h2>Barbeiros cadastrados</h2>
+                                </div>
+                            </div>
+                            <div id="barbers-admin-list" class="stack-grid"></div>
+                        </article>
+                    </div>
+                </section>
+
+                <section id="view-settings" class="view owner-only-view">
+                    <div class="view-grid">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Marca</span>
+                                    <h2>Informações da barbearia</h2>
+                                </div>
+                            </div>
+                            <form id="shop-form" class="form-grid">
+                                <label>
+                                    <span>Nome</span>
+                                    <input type="text" id="shop-name">
+                                </label>
+                                <label>
+                                    <span>Slogan</span>
+                                    <input type="text" id="shop-slogan">
+                                </label>
+                                <label>
+                                    <span>Telefone</span>
+                                    <input type="text" id="shop-phone">
+                                </label>
+                                <label>
+                                    <span>Endereço</span>
+                                    <input type="text" id="shop-address">
+                                </label>
+                                <label class="wide">
+                                    <span>Link do mapa</span>
+                                    <input type="url" id="shop-maps">
+                                </label>
+                                <label class="toggle-line">
+                                    <input type="checkbox" id="feature-subscriptions" checked>
+                                    <span>Assinaturas habilitadas</span>
+                                </label>
+                                <label class="toggle-line">
+                                    <input type="checkbox" id="feature-fiscal" checked>
+                                    <span>Relatório financeiro habilitado</span>
+                                </label>
+                                <button type="submit" class="primary-button">Salvar configurações</button>
+                            </form>
+                        </article>
+
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <span class="eyebrow">Migração</span>
+                                    <h2>Compatibilidade legada</h2>
+                                </div>
+                            </div>
+                            <p class="helper-text">
+                                Gera barbeiro padrão inicial, sincroniza perfis públicos e preenche `barberId`/`serviceId`
+                                nos agendamentos antigos.
+                            </p>
+                            <button id="run-migration-button" class="primary-button" type="button">Executar migração</button>
+                        </article>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+    <script type="module" src="/assets/js/admin/app.js"></script>
+</body>
+
+</html>
