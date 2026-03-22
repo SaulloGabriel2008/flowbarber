@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const CACHE_NAME = "prime-barber-cache-v2";
 const APP_SHELL = [
   "/index.html",
@@ -28,6 +29,41 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+=======
+const CACHE_NAME = "flow-barber-cache-v3";
+const APP_SHELL = [
+  "/index.html",
+  "/agendar.html",
+  "/admin.html",
+  "/manifest.json",
+  "/assets/css/landing.css",
+  "/assets/css/site.css",
+  "/assets/css/admin.css",
+  "/assets/js/landing.js",
+  "/assets/js/shared/firebase.js",
+  "/assets/js/shared/utils.js",
+  "/assets/js/shared/data.js",
+  "/assets/js/public/app.js",
+  "/assets/js/admin/app.js",
+  "/icon-192.png",
+  "/icon-512.png"
+];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => Promise.all(
+      keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+    ))
+  );
+});
+
+>>>>>>> ca70986 (Create Flow Barber landing and separate booking app)
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   if (event.request.cache === "only-if-cached" && event.request.mode !== "same-origin") return;
