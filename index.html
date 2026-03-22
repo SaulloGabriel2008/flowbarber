@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary: #1e90ff;
@@ -22,57 +23,143 @@
             --subscription-hover: rgba(139, 92, 246, 0.2);
         }
 
-        body { 
-            margin: 0; font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6;
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
             -webkit-tap-highlight-color: transparent;
         }
 
-        header { 
-            padding: 40px 20px; max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center;
+        header {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-area img { height: 50px; border-radius: 50%; border: 2px solid var(--primary); }
-        .logo-area h1 { font-size: 1.4rem; letter-spacing: 2px; margin: 0; text-transform: uppercase; }
 
-        .nav-buttons { display: flex; gap: 10px; }
-        .nav-btn { 
-            background: transparent; border: 1px solid var(--border); color: #fff;
-            padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem;
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .nav-btn.active { background: var(--primary); border-color: var(--primary); color: #000; }
+
+        .logo-area img {
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+
+        .logo-area h1 {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #000;
+        }
 
         .main-layout {
-            display: grid; grid-template-columns: 1fr 380px; gap: 40px;
-            max-width: 1200px; margin: 0 auto; padding: 0 20px 60px 20px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
         }
 
-        .section-title { font-size: 1.4rem; font-weight: 700; margin: 30px 0 20px 0; display: flex; align-items: center; gap: 12px; }
-        .section-num { color: var(--primary); font-style: italic; opacity: 0.6; }
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 30px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .section-num {
+            color: var(--primary);
+            font-style: italic;
+            opacity: 0.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
         .service-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 20px; border-radius: 12px; cursor: pointer; transition: 0.3s;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .service-card:hover { border-color: var(--primary); }
-        .service-card.selected { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 15px rgba(30,144,255,0.2);
+
+        .service-card:hover {
+            border-color: var(--primary);
+        }
+
+        .service-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.2);
             background: var(--card-bg);
         }
-        .service-card h3 { margin: 0 0 8px 0; font-size: 1rem; }
-        .service-card p { font-size: 0.8rem; color: var(--text-muted); margin: 0 0 15px 0; min-height: 40px; }
-        .service-meta { display: flex; justify-content: space-between; align-items: center; }
-        .service-price { font-weight: 700; color: #fff; }
+
+        .service-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .service-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0 0 15px 0;
+            min-height: 40px;
+        }
+
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: #fff;
+        }
 
         .date-picker-wrapper {
             position: relative;
             max-width: 320px;
             margin-bottom: 25px;
         }
-        
+
         .date-picker {
             appearance: none;
             -webkit-appearance: none;
@@ -114,92 +201,192 @@
             padding: 5px;
         }
 
-        .horarios-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; }
+        .horarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 10px;
+        }
+
         .time-btn {
-            background: transparent; border: 1px solid var(--border); color: #fff;
-            padding: 12px; border-radius: 6px; cursor: pointer; transition: 0.2s;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
             position: relative;
         }
-        
-        .time-btn.selected { 
-            background: var(--primary); 
-            color: #000; 
-            font-weight: 800; 
+
+        .time-btn.selected {
+            background: var(--primary);
+            color: #000;
+            font-weight: 800;
             border: 2px dashed #ffffff;
-            box-shadow: 0 0 20px rgba(30,144,255,0.6); 
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
             transform: scale(1.05);
             z-index: 2;
         }
 
-        .time-btn.blocked { opacity: 0.2; cursor: not-allowed; text-decoration: line-through; pointer-events: none; background: #222; }
+        .time-btn.blocked {
+            opacity: 0.2;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            pointer-events: none;
+            background: #222;
+        }
 
         .summary-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            padding: 30px; border-radius: 15px; position: sticky; top: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 15px;
+            position: sticky;
+            top: 20px;
         }
-        .summary-row { margin-bottom: 20px; }
-        .summary-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; display: block; }
-        .summary-value { font-size: 1rem; font-weight: 600; display: block; margin-top: 5px; }
-        .total-price { font-size: 2.2rem; font-weight: 700; margin: 20px 0; display: block; }
-        
+
+        .summary-row {
+            margin-bottom: 20px;
+        }
+
+        .summary-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .summary-value {
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .total-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 20px 0;
+            display: block;
+        }
+
         .btn-confirm {
-            width: 100%; padding: 18px; border-radius: 8px; border: 1px solid var(--border);
-            background: #222; color: #555; font-weight: 700; cursor: pointer; transition: 0.3s;
+            width: 100%;
+            padding: 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #222;
+            color: #555;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .btn-confirm.ready { background: #fff; color: #000; border-color: #fff; box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
+
+        .btn-confirm.ready {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
 
         /* AJUSTE PARA MOBILE NA SEÇÃO DE CONTA */
         .auth-container {
-            background: var(--card-bg); padding: 30px; border-radius: 12px;
-            max-width: 400px; margin: 40px auto; border: 1px solid var(--border);
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: 40px auto;
+            border: 1px solid var(--border);
             display: none;
-            box-sizing: border-box; /* Garante que o preenchimento não quebre a largura */
-            width: calc(100% - 40px); /* Garante margens laterais no celular */
+            box-sizing: border-box;
+            /* Garante que o preenchimento não quebre a largura */
+            width: calc(100% - 40px);
+            /* Garante margens laterais no celular */
         }
-        .auth-container input {
-            width: 100%; padding: 12px; margin: 10px 0; background: #000;
-            border: 1px solid var(--border); color: #fff; border-radius: 6px; box-sizing: border-box;
-            font-size: 16px; /* Evita zoom automático chato no iPhone */
-        }
-        .toggle-auth { color: var(--primary); cursor: pointer; font-size: 0.85rem; text-align: center; display: block; margin-top: 15px; }
 
-        footer { border-top: 1px solid var(--border); padding: 40px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
-        .map-link { 
-            color: var(--primary); text-decoration: none; font-weight: 700; 
-            display: inline-block; margin-top: 10px; border: 1px solid var(--primary);
-            padding: 8px 15px; border-radius: 5px; transition: 0.3s;
+        .auth-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #000;
+            border: 1px solid var(--border);
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            /* Evita zoom automático chato no iPhone */
         }
-        .map-link:hover { background: var(--primary); color: #000; }
+
+        .toggle-auth {
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .map-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .map-link:hover {
+            background: var(--primary);
+            color: #000;
+        }
 
         /* Estilos para Assinaturas */
         .subscription-card {
             border: 2px solid var(--border);
             transition: all 0.3s ease;
         }
+
         .subscription-card:hover {
             border-color: var(--primary);
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(30, 144, 255, 0.15);
         }
+
         .subscription-card.selected {
             border-color: var(--primary);
             box-shadow: 0 0 25px rgba(30, 144, 255, 0.4);
             transform: scale(1.02);
         }
+
         .subscription-card h3 {
             color: var(--primary);
             margin-bottom: 10px;
         }
+
         .subscription-card ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+
         .subscription-card li {
             padding: 3px 0;
             font-size: 0.85rem;
             color: var(--text-muted);
         }
+
         .subscription-card li:before {
             content: "✓ ";
             color: var(--primary);
@@ -212,6 +399,7 @@
             background: var(--subscription-light);
             position: relative;
         }
+
         .service-card.subscription-included::before {
             content: "👑 ASSINATURA";
             position: absolute;
@@ -225,6 +413,7 @@
             font-weight: bold;
             z-index: 1;
         }
+
         .subscription-badge {
             background: var(--subscription);
             color: white;
@@ -234,15 +423,18 @@
             font-weight: bold;
             margin-left: 8px;
         }
+
         .subscription-free {
             color: var(--subscription);
             font-weight: bold;
             font-size: 1.1rem;
         }
+
         .subscription-tooltip {
             position: relative;
             display: inline-block;
         }
+
         .subscription-tooltip .tooltip-text {
             visibility: hidden;
             width: 200px;
@@ -261,10 +453,12 @@
             border: 1px solid var(--border);
             font-size: 0.8rem;
         }
+
         .subscription-tooltip:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
         }
+
         .subscription-usage {
             background: var(--subscription-light);
             border: 1px solid var(--subscription-border);
@@ -273,9 +467,11 @@
             margin: 10px 0;
             font-size: 0.85rem;
         }
+
         .subscription-usage strong {
             color: var(--subscription);
         }
+
         .subscription-savings {
             background: linear-gradient(135deg, var(--subscription), var(--primary));
             color: white;
@@ -286,6 +482,7 @@
             margin: 8px 0;
             text-align: center;
         }
+
         .subscription-upgrade {
             background: var(--warn);
             color: white;
@@ -296,6 +493,7 @@
             text-align: center;
             cursor: pointer;
         }
+
         .subscription-confirm {
             background: var(--subscription);
             color: white;
@@ -308,20 +506,83 @@
             width: 100%;
         }
 
-@media (max-width: 900px) { .main-layout { grid-template-columns: 1fr; } .summary-card { position: static; } .services-grid { grid-template-columns: 1fr; } header { flex-direction: column; gap: 20px; } .auth-container { margin: 20px auto; } .logo-area h1 { font-size: 1rem; } .nav-buttons { flex-wrap: wrap; justify-content: center; } .nav-btn { padding: 8px 12px; font-size: 0.75rem; } .section-title { font-size: 1.2rem; } .horarios-grid { grid-template-columns: repeat(3, 1fr); } .service-card { padding: 15px; } .service-card h3 { font-size: 0.95rem; } .summary-card { padding: 20px; } .total-price { font-size: 1.8rem; } }
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                position: static;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .auth-container {
+                margin: 20px auto;
+            }
+
+            .logo-area h1 {
+                font-size: 1rem;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .horarios-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .service-card {
+                padding: 15px;
+            }
+
+            .service-card h3 {
+                font-size: 0.95rem;
+            }
+
+            .summary-card {
+                padding: 20px;
+            }
+
+            .total-price {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="logo-area">
-            <img src="https://media.istockphoto.com/id/1446474893/pt/vetorial/barbershop-logo-vector-salon-logo.jpg?s=612x612&w=0&k=20&c=Ctt2bw9V05sMx0iOmlhbgXiGQxRgsBxxxZ3k7UWj7YA=" alt="Logo">
+            <img src="https://media.istockphoto.com/id/1446474893/pt/vetorial/barbershop-logo-vector-salon-logo.jpg?s=612x612&w=0&k=20&c=Ctt2bw9V05sMx0iOmlhbgXiGQxRgsBxxxZ3k7UWj7YA="
+                alt="Logo">
             <h1 id="barbearia-nome-header">LOPES BARBEARIA</h1>
         </div>
         <div class="nav-buttons">
-            <button class="nav-btn active" id="btn-nav-agendamento" onclick="showSection('agendamento')">Agendar</button>
+            <button class="nav-btn active" id="btn-nav-agendamento"
+                onclick="showSection('agendamento')">Agendar</button>
             <button class="nav-btn" id="btn-nav-assinaturas" onclick="showSection('assinaturas')">Assinaturas</button>
-            <button class="nav-btn" id="btn-nav-minha-assinatura" onclick="showSection('minha-assinatura')">Minha Assinatura</button>
+            <button class="nav-btn" id="btn-nav-minha-assinatura" onclick="showSection('minha-assinatura')">Minha
+                Assinatura</button>
             <button class="nav-btn" id="btn-nav-cliente" onclick="showSection('cliente')">Meus Agendamentos</button>
         </div>
     </header>
@@ -330,7 +591,7 @@
         <div class="content-side">
             <div class="section-title"><span class="section-num">1</span> Escolha o Serviço</div>
             <div class="services-grid" id="services-grid">
-                </div>
+            </div>
 
             <div id="dateTimeArea" style="opacity: 0.3; pointer-events: none; transition: 0.5s;">
                 <div class="section-title"><span class="section-num">2</span> Data & Horário</div>
@@ -360,7 +621,8 @@
                     <span class="summary-label">Qual combo?</span>
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
                         <button class="time-btn" onclick="setComboType('basico')">Cabelo + Barba (R$ 45)</button>
-                        <button class="time-btn" onclick="setComboType('completo')">Cabelo + Barba + Sobrancelha (R$ 50)</button>
+                        <button class="time-btn" onclick="setComboType('completo')">Cabelo + Barba + Sobrancelha (R$
+                            50)</button>
                     </div>
                 </div>
 
@@ -368,19 +630,22 @@
                     <span class="summary-label">Data e Hora</span>
                     <span class="summary-value" id="resumoDataHora">---</span>
                 </div>
-                
+
                 <div id="observations-area" style="display:none; margin-bottom: 12px;">
                     <span class="summary-label">Observações / Preferências sensoriais</span>
-                    <textarea id="observations" placeholder="Ex: Prefere atenção calma, sem barulho" style="width:100%; height:70px; margin-top:8px; padding:8px; background:#000; color:#fff; border:1px solid var(--border); border-radius:6px; font-family: sans-serif;"></textarea>
+                    <textarea id="observations" placeholder="Ex: Prefere atenção calma, sem barulho"
+                        style="width:100%; height:70px; margin-top:8px; padding:8px; background:#000; color:#fff; border:1px solid var(--border); border-radius:6px; font-family: sans-serif;"></textarea>
                 </div>
 
                 <span class="summary-label">Total a pagar</span>
                 <span class="total-price" id="resumoPreco">
-                    R$ 0 <span id="resumoTempo" style="font-size:0.8rem; color:var(--text-muted); font-weight:500;"></span>
+                    R$ 0 <span id="resumoTempo"
+                        style="font-size:0.8rem; color:var(--text-muted); font-weight:500;"></span>
                 </span>
-                
-                <div id="userNameLogged" style="margin-bottom: 15px; font-size: 0.8rem; color: var(--primary); font-weight: 600;"></div>
-                
+
+                <div id="userNameLogged"
+                    style="margin-bottom: 15px; font-size: 0.8rem; color: var(--primary); font-weight: 600;"></div>
+
                 <button id="btnConfirmar" class="btn-confirm" disabled onclick="finalizarAgendamento()">
                     CONFIRMAR AGENDAMENTO
                 </button>
@@ -389,25 +654,33 @@
     </div>
 
     <div id="section-assinaturas" style="display: none; max-width: 1200px; margin: 0 auto; padding: 20px;">
-        <div class="section-title" style="text-align: center; margin-bottom: 40px; color: var(--primary); font-size: 2rem;">Escolha seu Plano de Assinatura</div>
-        <p style="text-align: center; color: var(-@med-text-muted); margin-bottom: 50px; font-size: 1.1rem;">Planos flexíveis para manter seu visual sempre impecável</p>
-        
-        <div class="services-grid" id="subscription-plans-container" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
+        <div class="section-title"
+            style="text-align: center; margin-bottom: 40px; color: var(--primary); font-size: 2rem;">Escolha seu Plano
+            de Assinatura</div>
+        <p style="text-align: center; color: var(-@med-text-muted); margin-bottom: 50px; font-size: 1.1rem;">Planos
+            flexíveis para manter seu visual sempre impecável</p>
+
+        <div class="services-grid" id="subscription-plans-container"
+            style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
             <!-- Planos serão carregados dinamicamente aqui -->
         </div>
 
-        <div id="subscription-details" style="display: none; margin-top: 40px; background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-            <h3 id="selected-plan-title" style="margin-bottom: 20px; color: var(--primary); text-align: center; font-size: 1.5rem;"></h3>
+        <div id="subscription-details"
+            style="display: none; margin-top: 40px; background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <h3 id="selected-plan-title"
+                style="margin-bottom: 20px; color: var(--primary); text-align: center; font-size: 1.5rem;"></h3>
             <div id="selected-plan-description" style="margin-bottom: 25px; line-height: 1.6;"></div>
             <div style="text-align: center;">
-                <button class="btn-confirm" style="background: var(--success); color: white; border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: bold;" onclick="confirmSubscription()">CONFIRMAR ASSINATURA</button>
+                <button class="btn-confirm"
+                    style="background: var(--success); color: white; border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: bold;"
+                    onclick="confirmSubscription()">CONFIRMAR ASSINATURA</button>
             </div>
         </div>
     </div>
 
     <div id="section-minha-assinatura" style="display: none; max-width: 1200px; margin: 0 auto; padding: 20px;">
         <div class="section-title" style="text-align: center; margin-bottom: 40px;">Minha Assinatura</div>
-        
+
         <div id="subscription-info" style="display: none;">
             <div class="summary-card" style="margin-bottom: 30px;">
                 <div class="summary-row">
@@ -450,17 +723,20 @@
                 <div id="usage-history">
                     <p style="color: var(--text-muted);">Carregando...</p>
                 </div>
-                <button class="btn-action" style="background: var(--subscription); margin-top: 15px;" onclick="showFullHistory()">VER HISTÓRICO COMPLETO</button>
+                <button class="btn-action" style="background: var(--subscription); margin-top: 15px;"
+                    onclick="showFullHistory()">VER HISTÓRICO COMPLETO</button>
             </div>
 
             <div style="text-align: center;">
-                <button class="btn-confirm" style="background: var(--primary);" onclick="contactBarber()">FALAR COM O BARBEIRO</button>
+                <button class="btn-confirm" style="background: var(--primary);" onclick="contactBarber()">FALAR COM O
+                    BARBEIRO</button>
             </div>
         </div>
 
         <div id="no-subscription" style="text-align: center; padding: 50px;">
             <h3 style="color: var(--text-muted);">Você não possui uma assinatura ativa</h3>
-            <p style="color: var(--text-muted); margin: 20px 0;">Clique em "Assinaturas" para conhecer nossos planos!</p>
+            <p style="color: var(--text-muted); margin: 20px 0;">Clique em "Assinaturas" para conhecer nossos planos!
+            </p>
             <button class="btn-confirm" onclick="showSection('assinaturas')">VER PLANOS</button>
         </div>
     </div>
@@ -470,7 +746,8 @@
             <h2 style="text-align: center;">Acessar</h2>
             <input type="text" id="login-email" placeholder="E-mail ou telefone">
             <input type="password" id="login-senha" placeholder="Senha">
-            <button class="nav-btn active" style="width: 100%; margin-top: 10px;" onclick="handleLogin()">Entrar</button>
+            <button class="nav-btn active" style="width: 100%; margin-top: 10px;"
+                onclick="handleLogin()">Entrar</button>
             <span class="toggle-auth" onclick="toggleAuthMode('signup')">Ainda não tem conta? Criar conta</span>
         </div>
 
@@ -480,7 +757,8 @@
             <input type="text" id="signup-phone" placeholder="Telefone (DDD + Número) *" required>
             <input type="email" id="signup-email" placeholder="E-mail *" required>
             <input type="password" id="signup-senha" placeholder="Senha (mín. 6 dígitos) *" required>
-            <button class="nav-btn active" style="width: 100%; margin-top: 10px;" onclick="handleSignUp()">Cadastrar</button>
+            <button class="nav-btn active" style="width: 100%; margin-top: 10px;"
+                onclick="handleSignUp()">Cadastrar</button>
             <span class="toggle-auth" onclick="toggleAuthMode('login')">Já tem conta? Entrar</span>
         </div>
 
@@ -508,17 +786,17 @@
         import { getFirestore, collection, addDoc, query, where, getDocs, getDoc, setDoc, doc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyBLBFTLC7sqM9VUhlsypPugQ-LhcX7-0Rw",
-            authDomain: "barbearia-do-rei.firebaseapp.com",
-            projectId: "barbearia-do-rei",
-            storageBucket: "barbearia-do-rei.firebasestorage.app",
-            messagingSenderId: "546744214164",
-            appId: "1:546744214164:web:5bd367381afbef253d0a81",
+            apiKey: "AIzaSyCInLdLMFOT7swPnMWtUH0z5o73RkwahCQ",
+            authDomain: "bradock-c664e.firebaseapp.com",
+            projectId: "bradock-c664e",
+            storageBucket: "bradock-c664e.firebasestorage.app",
+            messagingSenderId: "140609259960",
+            appId: "1:140609259960:web:c7706bc37061c97ea8674d",
         };
 
         const serviceOrder = [
             "Corte na Máquina",
-            "Corte só Tesoura", 
+            "Corte só Tesoura",
             "Corte Infantil",
             "Pezinho",
             "Combo Corte + Barba",
@@ -535,7 +813,7 @@
         const auth = getAuth(app);
 
         const inputData = document.getElementById('dataAgendamento');
-        
+
         // Função para obter data atual no formato YYYY-MM-DD
         const getTodayStr = () => {
             const now = new Date();
@@ -550,32 +828,32 @@
         inputData.setAttribute('min', hojeISO);
 
         // Estado da aplicação
-        let state = { 
-            servico: null, 
-            data: null, 
-            hora: null, 
-            user: null, 
+        let state = {
+            servico: null,
+            data: null,
+            hora: null,
+            user: null,
             monthlyBookings: {}
         };
-        
+
         // Variáveis para horários
         let horariosBase = []; // Será carregada do Firestore
         let horariosConfig = null; // Para armazenar configurações de horários
-        
+
         // Outras variáveis globais
         let servicesData = [];
         let usageChart = null;
         let userSubscription = null;
 
         // ========== FUNÇÕES DE CARREGAMENTO DE CONFIGURAÇÕES ==========
-        
+
         // Função para carregar configurações de horários
         async function loadHorariosConfig() {
             try {
                 console.log('Carregando configurações de horários...');
                 const docRef = doc(db, "configuracoes_gerais", "horarios");
                 const docSnap = await getDoc(docRef);
-                
+
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     console.log('Configurações de horários carregadas do admin:', data);
@@ -594,51 +872,51 @@
                 horariosBase = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"];
             }
         }
-        
+
         // Função para gerar array de horários a partir da configuração do admin
         function generateTimeSlots(horariosConfig) {
             if (!horariosConfig) return ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"];
-            
+
             // Usar configuração de segunda-feira como padrão ou primeira dia aberto
             const dias = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'];
             let diaConfig = null;
-            
+
             for (let dia of dias) {
                 if (horariosConfig[dia] && horariosConfig[dia].abre !== false) {
                     diaConfig = horariosConfig[dia];
                     break;
                 }
             }
-            
+
             if (!diaConfig) {
                 diaConfig = { abertura: '09:00', fechamento: '18:00', almocoInicio: '12:00', almocoFim: '13:00' };
             }
-            
+
             const slots = [];
             const [startH, startM] = diaConfig.abertura.split(':').map(Number);
             const [endH, endM] = diaConfig.fechamento.split(':').map(Number);
             const [lunchStartH, lunchStartM] = diaConfig.almocoInicio.split(':').map(Number);
             const [lunchEndH, lunchEndM] = diaConfig.almocoFim.split(':').map(Number);
-            
+
             let currentH = startH;
             let currentM = startM;
-            
+
             while (currentH < endH || (currentH === endH && currentM < endM)) {
                 const lunchStart = lunchStartH * 60 + lunchStartM;
                 const lunchEnd = lunchEndH * 60 + lunchEndM;
                 const current = currentH * 60 + currentM;
-                
+
                 if (current < lunchStart || current >= lunchEnd) {
                     slots.push(`${String(currentH).padStart(2, '0')}:${String(currentM).padStart(2, '0')}`);
                 }
-                
+
                 currentM += 30;
                 if (currentM >= 60) {
                     currentM = 0;
                     currentH += 1;
                 }
             }
-            
+
             return slots.length > 0 ? slots : ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"];
         }
 
@@ -689,26 +967,26 @@
                 console.log('Carregando configurações da barbearia...');
                 const docRef = doc(db, "configuracoes_gerais", "barbearia");
                 const docSnap = await getDoc(docRef);
-                
+
                 if (docSnap.exists()) {
                     const config = docSnap.data();
                     console.log('Configurações da barbearia carregadas:', config);
-                    
+
                     // Atualizar nome da barbearia
                     const barberName = config.barberName || 'Lopes Barbearia';
                     const headerElement = document.getElementById('barbearia-nome-header');
                     const titleElement = document.getElementById('page-title');
                     const footerNameElement = document.getElementById('barbearia-nome-footer');
-                    
+
                     if (headerElement) headerElement.textContent = barberName;
                     if (titleElement) titleElement.textContent = barberName;
                     if (footerNameElement) footerNameElement.textContent = barberName;
-                    
+
                     // Atualizar telefone (usar nas mensagens WhatsApp)
                     if (config.barberPhone) {
                         window.barberPhone = config.barberPhone.replace(/\D/g, '');
                     }
-                    
+
                     // Atualizar endereço e link do maps
                     if (config.barberAddress) {
                         const addressElement = document.getElementById('barbearia-endereco-footer');
@@ -716,14 +994,14 @@
                             addressElement.textContent = `📍 ${config.barberAddress}`;
                         }
                     }
-                    
+
                     if (config.barberMapsLink) {
                         const mapsLink = document.getElementById('barbearia-maps-link');
                         if (mapsLink) {
                             mapsLink.href = config.barberMapsLink;
                         }
                     }
-                    
+
                     console.log('Configurações da barbearia aplicadas com sucesso');
                 } else {
                     console.log('Nenhuma configuração da barbearia encontrada, usando padrões');
@@ -732,14 +1010,14 @@
                 console.error('Erro ao carregar configurações da barbearia:', error);
             }
         }
-        
+
         // Carregar duração de agendamentos
         async function loadDuracaoAgendamento() {
             try {
                 console.log('Carregando duração de agendamentos...');
                 const docRef = doc(db, "configuracoes_gerais", "agendamentos");
                 const docSnap = await getDoc(docRef);
-                
+
                 if (docSnap.exists()) {
                     const dados = docSnap.data();
                     window.duracaoAgendamento = dados.duracao || 30;
@@ -775,7 +1053,7 @@
                         console.log('✅ Horários atualizados em tempo real:', newHorariosConfig);
                         horariosConfig = newHorariosConfig;
                         horariosBase = generateTimeSlots(newHorariosConfig);
-                        
+
                         // Se estiver na página de agendamento, re-renderizar os horários
                         if (state.data) {
                             console.log('Renderizando horários atualizados...');
@@ -813,9 +1091,9 @@
             const now = new Date();
             const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
             const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-            
+
             try {
-                const q = query(collection(db, "agendamentos"), 
+                const q = query(collection(db, "agendamentos"),
                     where("userId", "==", state.user.uid),
                     where("data", ">=", startOfMonth.toISOString().split('T')[0]),
                     where("data", "<=", endOfMonth.toISOString().split('T')[0])
@@ -838,12 +1116,12 @@
         // Calcular disponibilidade por serviço baseado na assinatura
         function getServiceAvailability(serviceName, monthlyBookings) {
             if (!userSubscription) return null;
-            
+
             const plan = userSubscription.plan;
             const bookings = monthlyBookings[serviceName] || 0;
-            
+
             let limit = null;
-            
+
             // Tentar buscar no plano do Firebase
             const planData = subscriptionPlans[plan];
             if (planData && planData.servicesIncluded && Array.isArray(planData.servicesIncluded)) {
@@ -867,13 +1145,13 @@
                     limit = Infinity;
                 }
             }
-            
+
             if (limit === null) return null;
-            
+
             const available = limit - bookings;
             return { used: bookings, limit: limit, available: Math.max(0, available) };
         }
-        
+
         // Renderizar serviços
         function renderServices() {
             const grid = document.getElementById('services-grid');
@@ -881,7 +1159,7 @@
                 console.error('services-grid não encontrado');
                 return;
             }
-            
+
             if (!servicesData || servicesData.length === 0) {
                 console.warn('servicesData vazio, usando padrão');
                 servicesData = [
@@ -897,19 +1175,19 @@
                     { name: "Depilação Nariz/Orelha", duration: 10, price: 10 }
                 ];
             }
-            
+
             // Ordenar os serviços
             const sortedServices = [...servicesData].sort((a, b) => {
                 const indexA = serviceOrder.indexOf(a.name);
                 const indexB = serviceOrder.indexOf(b.name);
-                
+
                 if (indexA === -1 && indexB === -1) return 0;
                 if (indexA === -1) return 1;
                 if (indexB === -1) return -1;
-                
+
                 return indexA - indexB;
             });
-            
+
             const serviceDescriptions = {
                 "Corte na Máquina": "Corte rápido e prático com máquina.",
                 "Corte só Tesoura": "Corte exclusivo com tesoura para acabamento perfeito.",
@@ -927,16 +1205,16 @@
             grid.innerHTML = sortedServices.map(service => {
                 const displayName = service.name;
                 const availability = getServiceAvailability(service.name, state.monthlyBookings || {});
-                
+
                 // Usar descrição do banco de dados se disponível, caso contrário usar a padrão
                 let description = service.description || serviceDescriptions[service.name] || service.name;
-                
+
                 let availabilityText = '';
                 let priceDisplay = `R$ ${service.price}`;
                 let cardClass = 'service-card';
                 let badgeHtml = '';
                 let tooltipHtml = '';
-                
+
                 if (availability) {
                     if (availability.available > 0) {
                         cardClass += ' subscription-included';
@@ -951,7 +1229,7 @@
                 } else if (userSubscription) {
                     tooltipHtml = `<div class="subscription-tooltip">💳<span class="tooltip-text">Este serviço não está incluso na sua assinatura. Custa R$ ${service.price} avulso.</span></div>`;
                 }
-                
+
                 return `
                     <div class="${cardClass}" onclick="selectService(this, '${service.name}', ${service.duration}, ${service.price})">
                         <h3>${displayName}${badgeHtml}${tooltipHtml}</h3>
@@ -981,7 +1259,7 @@
             document.getElementById('btn-nav-minha-assinatura').classList.toggle('active', name === 'minha-assinatura');
             document.getElementById('btn-nav-cliente').classList.toggle('active', name === 'cliente');
             window.scrollTo(0, 0);
-            
+
             if (name === 'minha-assinatura') {
                 loadUserSubscription();
             }
@@ -1013,19 +1291,19 @@
 
             document.getElementById('resumoServico').innerHTML = `${nome}${slots > 1 ? ' (' + slots + ' slots)' : ''}${state.isSubscription ? ' <span style="color: var(--subscription); font-weight: bold;">(Assinatura)</span>' : ''}`;
             document.getElementById('resumoPreco').innerHTML = `R$ ${finalPreco} <span id="resumoTempo" style="font-size:0.8rem; color:var(--text-muted); font-weight:500;"> • ⏱ ${duracao} min </span>`;
-            
+
             document.getElementById('dateTimeArea').style.opacity = "1";
             document.getElementById('dateTimeArea').style.pointerEvents = "all";
 
-            if(nome === 'Corte Infantil') {
+            if (nome === 'Corte Infantil') {
                 document.getElementById('corte-area').style.display = 'none';
                 document.getElementById('combo-area').style.display = 'none';
                 document.getElementById('observations-area').style.display = 'block';
-            } else if(nome === 'Corte na Máquina' || nome === 'Corte só Tesoura') {
+            } else if (nome === 'Corte na Máquina' || nome === 'Corte só Tesoura') {
                 document.getElementById('corte-area').style.display = 'none';
                 document.getElementById('combo-area').style.display = 'none';
                 document.getElementById('observations-area').style.display = 'block';
-            } else if(nome === 'Combo Corte + Barba' || nome === 'Combo Completo: Cabelo, Barba e Sobrancelha') {
+            } else if (nome === 'Combo Corte + Barba' || nome === 'Combo Completo: Cabelo, Barba e Sobrancelha') {
                 document.getElementById('corte-area').style.display = 'none';
                 document.getElementById('combo-area').style.display = 'none';
                 document.getElementById('observations-area').style.display = 'block';
@@ -1034,7 +1312,7 @@
                 document.getElementById('combo-area').style.display = 'none';
                 document.getElementById('observations-area').style.display = 'block';
             }
-            
+
             if (state.data) renderHorarios();
             updateUI();
         };
@@ -1110,8 +1388,8 @@
 
         async function renderHorarios() {
             const grid = document.getElementById('gridHorarios');
-            if(!state.data) return;
-            
+            if (!state.data) return;
+
             const dataSelecionada = new Date(state.data + 'T00:00:00');
             const dayOfWeek = dataSelecionada.getDay();
             const dayNames = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
@@ -1120,11 +1398,11 @@
             // Verificar se o dia está aberto conforme configuração do admin
             let isDayOpen = true;
             let horariosDoDia = [...horariosBase];
-            
+
             if (horariosConfig && horariosConfig[dayName]) {
                 const dayConfig = horariosConfig[dayName];
                 isDayOpen = dayConfig.abre !== false;
-                
+
                 if (isDayOpen) {
                     // Gerar horários específicos do dia
                     horariosDoDia = [];
@@ -1132,19 +1410,19 @@
                     const [endH, endM] = dayConfig.fechamento.split(':').map(Number);
                     const [lunchStartH, lunchStartM] = dayConfig.almocoInicio.split(':').map(Number);
                     const [lunchEndH, lunchEndM] = dayConfig.almocoFim.split(':').map(Number);
-                    
+
                     let currentH = startH;
                     let currentM = startM;
-                    
+
                     while (currentH < endH || (currentH === endH && currentM < endM)) {
                         const lunchStart = lunchStartH * 60 + lunchStartM;
                         const lunchEnd = lunchEndH * 60 + lunchEndM;
                         const current = currentH * 60 + currentM;
-                        
+
                         if (current < lunchStart || current >= lunchEnd) {
                             horariosDoDia.push(`${String(currentH).padStart(2, '0')}:${String(currentM).padStart(2, '0')}`);
                         }
-                        
+
                         currentM += 30;
                         if (currentM >= 60) {
                             currentM = 0;
@@ -1195,9 +1473,9 @@
                     const btn = document.createElement('button');
                     btn.className = 'time-btn';
                     btn.innerText = h;
-                    
+
                     const [hH, hM] = h.split(':').map(Number);
-                    
+
                     let isPast = false;
                     if (state.data === dataHojeStr) {
                         const horaLimite = new Date();
@@ -1206,11 +1484,11 @@
                     }
 
                     let canFit = true;
-                    for(let i = 0; i < (state.servico?.slots || 1); i++) {
+                    for (let i = 0; i < (state.servico?.slots || 1); i++) {
                         const targetTime = horariosDoDia[index + i];
-                        if (!targetTime || occupiedSet.has(targetTime)) { 
-                            canFit = false; 
-                            break; 
+                        if (!targetTime || occupiedSet.has(targetTime)) {
+                            canFit = false;
+                            break;
                         }
                     }
 
@@ -1241,9 +1519,9 @@
                     }
                     grid.appendChild(btn);
                 });
-            } catch (e) { 
+            } catch (e) {
                 console.error("Erro ao renderizar horários:", e);
-                grid.innerHTML = "Erro ao carregar horários."; 
+                grid.innerHTML = "Erro ao carregar horários.";
             }
         }
 
@@ -1275,7 +1553,7 @@
                 if (iden.includes('@')) {
                     await signInWithEmailAndPassword(auth, iden, senha);
                 } else {
-                    const clean = iden.replace(/\D/g,'');
+                    const clean = iden.replace(/\D/g, '');
                     const q = query(collection(db, 'users'), where('phone', '==', clean));
                     const snap = await getDocs(q);
                     if (snap.empty) throw new Error('Usuário não encontrado');
@@ -1298,7 +1576,7 @@
                         if (userData.nome) nomeExibicao = userData.nome;
                         if (userData.phone) userPhone = userData.phone;
                     }
-                } catch (e) {}
+                } catch (e) { }
 
                 state.user.phone = userPhone;
 
@@ -1307,7 +1585,7 @@
                 document.getElementById('auth-signup').style.display = "none";
                 document.getElementById('clientName').innerText = nomeExibicao;
                 document.getElementById('userNameLogged').innerText = `Agendando para: ${nomeExibicao}`;
-                
+
                 await loadUserSubscriptionForBooking();
                 state.monthlyBookings = await getMonthlyBookings();
                 window.renderServices();
@@ -1350,7 +1628,7 @@
 
             const btn = document.getElementById('btnConfirmar');
             btn.innerText = "SALVANDO..."; btn.disabled = true;
-            
+
             try {
                 const uDoc = await getDoc(doc(db, 'users', state.user.uid));
                 const userData = uDoc.data();
@@ -1414,15 +1692,15 @@
                 const msg = encodeURIComponent(`💈 *${barberName}*\n\n👤 Cliente: ${nomeCliente}\n✂️ Serviço: ${displayService}\n📅 Data: ${state.data.split('-').reverse().join('/')}\n⏰ Hora: ${state.hora}h`);
                 window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${msg}`);
                 location.reload();
-            } catch (e) { 
-                alert(e.message); btn.innerText = "CONFIRMAR AGENDAMENTO"; btn.disabled = false; 
+            } catch (e) {
+                alert(e.message); btn.innerText = "CONFIRMAR AGENDAMENTO"; btn.disabled = false;
             }
         };
 
         function updateUI() {
             const btn = document.getElementById('btnConfirmar');
             let ready = !!(state.servico && state.data && state.hora);
-            
+
             btn.disabled = !ready;
             btn.classList.toggle('ready', !btn.disabled);
         }
@@ -1450,7 +1728,7 @@
 
         window.cancelMyBooking = async (id, dadosRaw) => {
             const dados = JSON.parse(dadosRaw);
-            
+
             const agora = new Date();
             const [horaS, minS] = dados.hora.split(':').map(Number);
             const dataAgendamento = new Date(dados.data + 'T00:00:00');
@@ -1477,10 +1755,10 @@
             }
 
             if (!confirm('Deseja realmente cancelar este agendamento?')) return;
-            
+
             try {
                 await deleteDoc(doc(db, 'agendamentos', id));
-                
+
                 const barberName = document.getElementById('barbearia-nome-header').textContent || 'Lopes Barbearia';
                 const phone = window.barberPhone || "5528999082741";
                 const msgCancelamento = encodeURIComponent(
@@ -1490,7 +1768,7 @@
                     `📅 Data: ${dados.data.split('-').reverse().join('/')}\n` +
                     `⏰ Hora: ${dados.hora}h\n\n`
                 );
-                
+
                 alert("Agendamento removido. Informando o barbeiro...");
                 window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${msgCancelamento}`);
                 loadUserAppointments(state.user.uid);
@@ -1540,14 +1818,14 @@
             try {
                 const docRef = doc(db, "configuracoes_gerais", "assinaturas");
                 const docSnap = await getDoc(docRef);
-                
+
                 if (docSnap.exists()) {
                     const dados = docSnap.data();
                     subscriptionsEnabled = dados.enabled !== false;
                 } else {
                     subscriptionsEnabled = true;
                 }
-                
+
                 updateSubscriptionsVisibility();
             } catch (error) {
                 console.error("Erro ao carregar status de assinaturas:", error);
@@ -1561,7 +1839,7 @@
             const sectionMinhaAssinatura = document.getElementById('section-minha-assinatura');
             const btnNavAssinaturas = document.getElementById('btn-nav-assinaturas');
             const btnNavMinhaAssinatura = document.getElementById('btn-nav-minha-assinatura');
-            
+
             if (subscriptionsEnabled) {
                 if (sectionAssinaturas) sectionAssinaturas.style.display = 'none'; // Oculto por padrão, mostrar via showSection
                 if (sectionMinhaAssinatura) sectionMinhaAssinatura.style.display = 'none'; // Oculto por padrão
@@ -1580,7 +1858,7 @@
             onSnapshot(collection(db, "subscription_plans"), snap => {
                 subscriptionPlansData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 console.log('Planos de assinatura carregados:', subscriptionPlansData);
-                
+
                 // Reconstruir objeto de planos por ID para manter compatibilidade
                 subscriptionPlans = {};
                 subscriptionPlansData.forEach(plan => {
@@ -1631,7 +1909,7 @@
             const clickedCard = document.querySelector(`[onclick="selectSubscription('${planId}')"]`);
             if (clickedCard) clickedCard.classList.add('selected');
             selectedPlan = planId;
-            
+
             const plan = subscriptionPlans[planId];
             if (!plan) {
                 console.error('Plano não encontrado:', planId);
@@ -1639,7 +1917,7 @@
             }
 
             document.getElementById('selected-plan-title').innerText = plan.name;
-            
+
             // Gerar benefícios da lista de serviços inclusos
             let benefitsHtml = '';
             if (plan.servicesIncluded && Array.isArray(plan.servicesIncluded) && plan.servicesIncluded.length > 0) {
@@ -1682,20 +1960,20 @@
             try {
                 const now = new Date();
                 const currentMonth = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-                
+
                 const q = query(
-                    collection(db, "assinaturas"), 
+                    collection(db, "assinaturas"),
                     where("clientId", "==", state.user.uid),
                     where("status", "==", "active")
                 );
                 const existingSubs = await getDocs(q);
-                
+
                 const hasActiveThisMonth = existingSubs.docs.some(doc => {
                     const data = doc.data();
                     const startMonth = data.startDate.substring(0, 7);
                     return startMonth === currentMonth;
                 });
-                
+
                 if (hasActiveThisMonth) {
                     alert('Você já possui uma assinatura ativa este mês. Aguarde o próximo mês para assinar novamente.');
                     return;
@@ -1723,7 +2001,7 @@
                 selectedPlan = null;
                 document.getElementById('subscription-details').style.display = 'none';
                 document.querySelectorAll('.subscription-card').forEach(c => c.classList.remove('selected'));
-                
+
                 showSection('minha-assinatura');
             } catch (e) {
                 alert("❌ Erro ao confirmar assinatura: " + e.message);
@@ -1743,14 +2021,14 @@
             try {
                 const q = query(collection(db, "assinaturas"), where("clientId", "==", state.user.uid), where("status", "==", "active"));
                 const querySnapshot = await getDocs(q);
-                
+
                 if (!querySnapshot.empty) {
                     const sub = querySnapshot.docs[0].data();
                     document.getElementById('current-plan-name').innerText = sub.planName;
                     document.getElementById('current-plan-price').innerText = `R$ ${sub.value.toFixed(2)}`;
                     document.getElementById('next-billing-date').innerText = new Date(sub.nextBilling).toLocaleDateString('pt-BR');
                     document.getElementById('subscription-status').innerText = 'Ativa';
-                    
+
                     document.getElementById('subscription-info').style.display = 'block';
                     document.getElementById('no-subscription').style.display = 'none';
 
@@ -1772,16 +2050,16 @@
             const now = new Date();
             const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
             const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-            
+
             try {
-                const q = query(collection(db, "agendamentos"), 
+                const q = query(collection(db, "agendamentos"),
                     where("userId", "==", state.user.uid),
                     where("isSubscription", "==", true),
                     where("data", ">=", startOfMonth.toISOString().split('T')[0]),
                     where("data", "<=", endOfMonth.toISOString().split('T')[0])
                 );
                 const snap = await getDocs(q);
-                
+
                 const usageByService = {};
                 snap.forEach(doc => {
                     const data = doc.data();
@@ -1795,11 +2073,11 @@
                 const limits = labels.map(service => planLimits[service]);
 
                 const ctx = document.getElementById('usageChart').getContext('2d');
-                
+
                 if (usageChart) {
                     usageChart.destroy();
                 }
-                
+
                 usageChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -1863,7 +2141,7 @@
             const container = document.getElementById('upcoming-benefits');
             const nextBilling = new Date(subscription.nextBilling);
             const daysUntilRenewal = Math.ceil((nextBilling - new Date()) / (1000 * 60 * 60 * 24));
-            
+
             container.innerHTML = `
                 <div style="background: var(--subscription-light); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
                     <strong style="color: var(--subscription);">🔄 Renovação Automática</strong><br>
@@ -1880,15 +2158,15 @@
             const container = document.getElementById('usage-history');
             const now = new Date();
             const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            
+
             try {
-                const q = query(collection(db, "agendamentos"), 
+                const q = query(collection(db, "agendamentos"),
                     where("userId", "==", state.user.uid),
                     where("isSubscription", "==", true),
                     where("data", ">=", startOfMonth.toISOString().split('T')[0])
                 );
                 const snap = await getDocs(q);
-                
+
                 if (snap.empty) {
                     container.innerHTML = '<p style="color: var(--text-muted);">Nenhum uso registrado este mês.</p>';
                     return;
@@ -1949,4 +2227,5 @@
         }
     </script>
 </body>
+
 </html>
