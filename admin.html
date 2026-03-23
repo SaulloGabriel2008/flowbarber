@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin | FLOW BARBER</title>
+    <title>Flow Barber | Sistema para Barbearias</title>
     <link rel="manifest" href="/manifest.json">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -33,38 +33,256 @@
         html, body { height: 100%; overflow-y: auto; overflow-x: hidden; }
 
         /* Login - Mobile First */
-        #login-screen { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-            padding: 1rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        #login-screen {
+            display: block;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top right, rgba(30, 144, 255, 0.18), transparent 28%),
+                radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.12), transparent 24%),
+                linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+            padding: 0;
+            position: relative;
             z-index: 9999;
-        }
-        
-        .login-card { 
-            background: var(--bg-card); 
-            padding: 1.5rem; 
-            border-radius: 1rem; 
-            width: 100%; 
-            max-width: 400px; 
-            border: 1px solid var(--border);
+            overflow-y: auto;
         }
 
-        .login-actions {
+        .landing-shell {
+            width: 100%;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 3.5rem;
+        }
+
+        .landing-topbar {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .landing-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-main);
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .landing-brand-badge {
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(30, 144, 255, 0.25);
+            background: rgba(30, 144, 255, 0.08);
+            color: #bfdbfe;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .landing-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+            gap: 1.5rem;
+            align-items: stretch;
+            margin-bottom: 2.5rem;
+        }
+
+        .landing-hero-copy,
+        .landing-highlight-card,
+        .landing-section {
+            background: linear-gradient(180deg, rgba(26, 26, 26, 0.94), rgba(12, 12, 12, 0.94));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 26px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+        }
+
+        .landing-hero-copy {
+            padding: 2rem;
+        }
+
+        .landing-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.85rem;
+            margin-bottom: 1rem;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.22);
+            color: #86efac;
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .landing-title {
+            font-size: clamp(2.25rem, 5vw, 4.25rem);
+            line-height: 0.98;
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+        }
+
+        .landing-title strong {
+            color: #93c5fd;
+            font-weight: 900;
+        }
+
+        .landing-subtitle {
+            color: #d1d5db;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            max-width: 58ch;
+            margin-bottom: 1.5rem;
+        }
+
+        .landing-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            margin-bottom: 1.35rem;
+        }
+
+        .landing-benefit-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.85rem;
+            margin-top: 1.5rem;
+        }
+
+        .landing-benefit-chip {
+            padding: 0.9rem 1rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #e5e7eb;
+            font-size: 0.9rem;
+        }
+
+        .landing-benefit-chip strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .landing-highlight-card {
+            padding: 1.6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .landing-highlight-card::before {
+            content: '';
+            position: absolute;
+            inset: auto -15% 8% 40%;
+            height: 180px;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.18), transparent 70%);
+            pointer-events: none;
+        }
+
+        .landing-highlight-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .landing-highlight-list {
+            display: grid;
             gap: 0.85rem;
         }
 
+        .landing-highlight-item {
+            padding: 0.95rem 1rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .landing-highlight-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: #fff;
+        }
+
+        .landing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .landing-section {
+            padding: 1.5rem;
+        }
+
+        .landing-section h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .landing-section p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .landing-journey {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .landing-journey-step {
+            padding: 1.25rem;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .landing-step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            margin-bottom: 0.8rem;
+            background: rgba(30, 144, 255, 0.14);
+            color: #93c5fd;
+            font-weight: 900;
+        }
+
+        .landing-journey-step strong {
+            display: block;
+            margin-bottom: 0.35rem;
+        }
+
+        .landing-journey-step p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .landing-footer-cta {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(16, 185, 129, 0.08));
+            border: 1px solid rgba(30, 144, 255, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .landing-footer-cta p {
+            color: #dbeafe;
+            line-height: 1.6;
+        }
+
         .btn-secondary {
-            width: 100%;
+            width: auto;
             padding: 12px 18px;
             border-radius: 10px;
             border: 1px solid rgba(30, 144, 255, 0.35);
@@ -87,6 +305,54 @@
             text-align: center;
             font-size: 0.82rem;
             color: var(--text-muted);
+        }
+
+        @media (max-width: 980px) {
+            .landing-hero,
+            .landing-grid,
+            .landing-journey {
+                grid-template-columns: 1fr;
+            }
+
+            .landing-benefit-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .landing-footer-cta {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .landing-shell {
+                padding: 1.25rem 1rem 2.5rem;
+            }
+
+            .landing-topbar {
+                align-items: flex-start;
+                flex-direction: column;
+                margin-bottom: 1.75rem;
+            }
+
+            .landing-hero-copy,
+            .landing-highlight-card,
+            .landing-section {
+                border-radius: 22px;
+            }
+
+            .landing-hero-copy {
+                padding: 1.4rem;
+            }
+
+            .landing-actions {
+                flex-direction: column;
+            }
+
+            .btn-secondary,
+            .btn-action {
+                width: 100%;
+            }
         }
 
         /* Layout Principal */
@@ -1263,16 +1529,105 @@
 <body>
 
     <div id="login-screen">
-        <div class="login-card">
-            <h2 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem; font-size: 1.5rem;">FLOW BARBER</h2>
-            <div style="margin-bottom: 1rem;"><label>Email</label><input type="email" id="login-email" autocomplete="email"></div>
-            <div style="margin-bottom: 1.5rem;"><label>Senha</label><input type="password" id="login-password" autocomplete="current-password"></div>
-            <div class="login-actions">
-                <button class="btn-action" id="btn-login" style="width: 100%;">ENTRAR</button>
-                <button class="btn-secondary" id="btn-visitor-mode" type="button">ENTRAR COMO VISITANTE</button>
+        <div class="landing-shell">
+            <div class="landing-topbar">
+                <div class="landing-brand">
+                    <span>FLOW BARBER</span>
+                    <span class="landing-brand-badge">Sistema para Barbearias</span>
+                </div>
+                <button class="btn-secondary" id="btn-landing-whatsapp" type="button">Falar no WhatsApp</button>
             </div>
-            <p class="login-helper">Explore a demo do sistema sem precisar de email ou senha.</p>
-            <p id="login-error" style="color: var(--danger); font-size: 0.8rem; margin-top: 10px; text-align: center; display: none;"></p>
+
+            <section class="landing-hero">
+                <div class="landing-hero-copy">
+                    <div class="landing-kicker">
+                        <i data-lucide="sparkles"></i>
+                        <span>Organização sem complicação</span>
+                    </div>
+                    <h1 class="landing-title">Seu dia a dia mais leve, sua agenda mais cheia e sua barbearia <strong>mais profissional</strong>.</h1>
+                    <p class="landing-subtitle">O Flow Barber ajuda você a visualizar a agenda, acompanhar clientes, organizar assinaturas e ter mais clareza do financeiro, tudo em um sistema pensado para a rotina real de uma barbearia.</p>
+                    <div class="landing-actions">
+                        <button class="btn-action" id="btn-visitor-mode" type="button">Conhecer a demonstração</button>
+                        <button class="btn-secondary" id="btn-landing-benefits" type="button">Ver benefícios do sistema</button>
+                    </div>
+                    <div class="landing-benefit-strip">
+                        <div class="landing-benefit-chip">
+                            <strong>Agenda organizada</strong>
+                            Menos falhas, menos confusão e mais controle do dia.
+                        </div>
+                        <div class="landing-benefit-chip">
+                            <strong>Clientes mais presentes</strong>
+                            Histórico e recorrência para fortalecer o retorno.
+                        </div>
+                        <div class="landing-benefit-chip">
+                            <strong>Operação mais clara</strong>
+                            Visão rápida do que entra, do que sai e do que precisa de atenção.
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="landing-highlight-card">
+                    <h3>O que muda na prática</h3>
+                    <div class="landing-highlight-list">
+                        <div class="landing-highlight-item">
+                            <strong>Você enxerga o dia inteiro em segundos</strong>
+                            Saiba quem vem, quais horários estão livres e o que precisa ser confirmado.
+                        </div>
+                        <div class="landing-highlight-item">
+                            <strong>O sistema ajuda a manter a casa em ordem</strong>
+                            Clientes, assinaturas e financeiro ficam no mesmo fluxo, sem depender de vários cadernos e conversas soltas.
+                        </div>
+                        <div class="landing-highlight-item">
+                            <strong>Mais confiança na tomada de decisão</strong>
+                            Com uma visão organizada, fica mais fácil crescer sem perder o controle.
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="landing-grid">
+                <article class="landing-section">
+                    <h3>Agenda mais previsível</h3>
+                    <p>Visualize horários, encaixes e atendimentos de forma simples. Isso reduz ruído no dia a dia e ajuda você a atender melhor sem depender de memória ou improviso.</p>
+                </article>
+                <article class="landing-section">
+                    <h3>Clientes mais acompanhados</h3>
+                    <p>Tenha histórico, frequência e contexto para manter relacionamento, lembrar quem está sumido e criar uma rotina de atendimento mais consistente.</p>
+                </article>
+                <article class="landing-section">
+                    <h3>Financeiro com mais clareza</h3>
+                    <p>Acompanhe entradas, despesas e assinaturas em um só lugar para entender a operação com rapidez e agir com mais segurança.</p>
+                </article>
+            </section>
+
+            <section class="landing-section">
+                <h3>Como o Flow Barber ajuda no seu dia a dia</h3>
+                <div class="landing-journey">
+                    <div class="landing-journey-step">
+                        <span class="landing-step-number">1</span>
+                        <strong>Comece o dia já sabendo onde focar</strong>
+                        <p>Veja a movimentação da agenda, quem precisa de atenção e quais horários podem virar oportunidade.</p>
+                    </div>
+                    <div class="landing-journey-step">
+                        <span class="landing-step-number">2</span>
+                        <strong>Mantenha a operação redonda</strong>
+                        <p>Clientes, recorrência e assinaturas ficam organizados para você não perder o controle conforme a barbearia cresce.</p>
+                    </div>
+                    <div class="landing-journey-step">
+                        <span class="landing-step-number">3</span>
+                        <strong>Tenha visão para decidir melhor</strong>
+                        <p>Com o sistema centralizando o fluxo, fica muito mais fácil entender o momento da barbearia e evoluir com consistência.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="landing-footer-cta">
+                <p>Veja por dentro como o sistema funciona e entenda como ele pode organizar sua agenda, seus clientes e a rotina da sua barbearia.</p>
+                <div class="landing-actions">
+                    <button class="btn-action" id="btn-visitor-mode-footer" type="button">Abrir demonstração</button>
+                    <button class="btn-secondary" id="btn-landing-whatsapp-footer" type="button">Conversar pelo WhatsApp</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2091,7 +2446,7 @@
         let emailsAutorizados = ['saullinho2008@gmail.com']; // Lista de emails autorizados
         let isFirstLoadComplete = false; // Flag para rastrear primeiro carregamento completo
         let visitorMode = false;
-        let appMode = 'auth';
+        let appMode = 'landing';
         let realtimeListenersInitialized = false;
         let panelSetupInitialized = false;
         let salesModalContext = 'default';
@@ -2461,7 +2816,6 @@
 
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
-            document.getElementById('login-error').style.display = 'none';
 
             const logoEl = document.querySelector('.header-title .logo');
             if (logoEl) logoEl.textContent = demoData.barberName;
@@ -2796,104 +3150,49 @@
 
         onAuthStateChanged(auth, user => {
             if (user) {
-                visitorMode = false;
-                appMode = 'auth';
-                currentUserEmail = user.email;
-                
+                signOut(auth).catch(() => {});
+                return;
+            }
 
-                
-                // Carregar emails autorizados e verificar acesso
-                carregarEmailsAutorizados().then(() => {
-                    // Verificar se o email está autorizado
-                    const emailAutorizado = emailsAutorizados.includes(currentUserEmail.toLowerCase());
-                    
-                    if (!emailAutorizado) {
-                        // Email não está autorizado
-                        signOut(auth);
-                        document.getElementById('login-screen').style.display = 'flex';
-                        document.getElementById('admin-panel').style.display = 'none';
-                        const loginError = document.getElementById('login-error');
-                        loginError.innerText = 'Este email não está autorizado para acessar o admin.';
-                        loginError.style.display = 'block';
-                        return;
-                    }
-                    
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('admin-panel').style.display = 'block';
-                    initializeRealPanel();
-                    updateVisitorBadge();
-                    updateSettingsMenuVisibility();
-                    
-                    // Atualizar a aba atual para dashboard ao logar
-                    try { switchTab('dashboard'); } catch(e) { /* ignore */ }
-                    
-                    // Esconder item de configurações do menu se não for o email permitido
-                    if (currentUserEmail !== 'saullinho2008@gmail.com') {
-                        const configMenuItem = document.getElementById('configuracoes-menu-item');
-                        if (configMenuItem) {
-                            configMenuItem.style.display = 'none';
-                        }
-                    } else {
-                        // Se for o email principal, mostrar o item de configurações
-                        const configMenuItem = document.getElementById('configuracoes-menu-item');
-                        if (configMenuItem) {
-                            configMenuItem.style.display = 'flex';
-                        }
-                    }
-                    
-                    initListeners();
-                    showToast('Login realizado com sucesso!', 'success');
-                });
-            } else {
-                if (visitorMode) {
-                    return;
-                }
-                currentUserEmail = null;
-                document.getElementById('login-screen').style.display = 'flex';
-                document.getElementById('admin-panel').style.display = 'none';
-                updateSettingsMenuVisibility();
+            if (visitorMode) {
+                return;
+            }
+
+            currentUserEmail = null;
+            appMode = 'landing';
+            document.getElementById('login-screen').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+            updateSettingsMenuVisibility();
+        });
+
+        const btnVisitorMode = document.getElementById('btn-visitor-mode');
+        const btnVisitorModeFooter = document.getElementById('btn-visitor-mode-footer');
+        const btnLandingBenefits = document.getElementById('btn-landing-benefits');
+        const btnLandingWhatsapp = document.getElementById('btn-landing-whatsapp');
+        const btnLandingWhatsappFooter = document.getElementById('btn-landing-whatsapp-footer');
+        const salesModalWhatsappBtn = document.getElementById('sales-modal-whatsapp');
+
+        [btnVisitorMode, btnVisitorModeFooter].forEach(btn => {
+            if (btn) {
+                btn.onclick = () => {
+                    startVisitorMode();
+                };
             }
         });
 
-        const loginError = document.getElementById('login-error');
-        const btnLogin = document.getElementById('btn-login');
-        const btnVisitorMode = document.getElementById('btn-visitor-mode');
-        const salesModalWhatsappBtn = document.getElementById('sales-modal-whatsapp');
-        if(btnLogin) {
-            btnLogin.onclick = async () => {
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                
-                if (!email || !password) {
-                    loginError.innerText = "Por favor, preencha todos os campos.";
-                    loginError.style.display = 'block';
-                    return;
-                }
-
-                btnLogin.disabled = true;
-                btnLogin.innerHTML = '<i data-lucide="loader-2" class="spin"></i> AUTENTICANDO...';
-                loginError.style.display = 'none';
-
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                } catch (error) {
-                    btnLogin.disabled = false;
-                    btnLogin.innerHTML = 'ENTRAR';
-                    loginError.style.display = 'block';
-                    if (error.code === 'auth/invalid-credential') {
-                        loginError.innerText = "Credenciais inválidas.";
-                    } else {
-                        loginError.innerText = "Erro: " + error.message;
-                    }
-                }
+        if (btnLandingBenefits) {
+            btnLandingBenefits.onclick = () => {
+                document.querySelector('.landing-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             };
         }
 
-        if (btnVisitorMode) {
-            btnVisitorMode.onclick = () => {
-                startVisitorMode();
-            };
-        }
+        [btnLandingWhatsapp, btnLandingWhatsappFooter].forEach(btn => {
+            if (btn) {
+                btn.onclick = () => {
+                    window.open(getSalesWhatsappLink(), '_blank');
+                };
+            }
+        });
 
         if (salesModalWhatsappBtn) {
             salesModalWhatsappBtn.onclick = () => {
@@ -2902,18 +3201,14 @@
         }
 
         window.logout = () => {
-            if (confirm('Deseja realmente sair?')) {
-                if (visitorMode || !auth.currentUser) {
-                    resetVisitorSession();
-                    panelSetupInitialized = false;
-                    document.getElementById('login-screen').style.display = 'flex';
-                    document.getElementById('admin-panel').style.display = 'none';
-                    const logoEl = document.querySelector('.header-title .logo');
-                    if (logoEl) logoEl.textContent = 'FLOW BARBER';
-                } else {
-                    signOut(auth);
-                }
-                showToast('Logout realizado com sucesso', 'info');
+            if (confirm('Deseja realmente sair da demonstração?')) {
+                resetVisitorSession();
+                panelSetupInitialized = false;
+                document.getElementById('login-screen').style.display = 'block';
+                document.getElementById('admin-panel').style.display = 'none';
+                const logoEl = document.querySelector('.header-title .logo');
+                if (logoEl) logoEl.textContent = 'FLOW BARBER';
+                showToast('Você voltou para a apresentação do sistema.', 'info');
             }
         };
 
@@ -6113,13 +6408,7 @@ async function enableNotifications() {
   }
 }
 
-// Ativa notificações quando o barbeiro logar
-onAuthStateChanged(auth, user => {
-  if (user) {
-    currentUserEmail = user.email;
-    enableNotifications();
-  }
-});
+// admin.html agora funciona apenas como landing page + demonstração
 
 
 
